@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="PaymentRecordDao" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.PaymentRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+    <result column="to_pay" property="toPay" jdbcType="DECIMAL" />
+    <result column="real_pay" property="realPay" jdbcType="DECIMAL" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="charge_emp" property="chargeEmp" jdbcType="VARCHAR" />
+    <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+    <result column="car_no" property="carNo" jdbcType="VARCHAR" />
+    <result column="pos_no" property="posNo" jdbcType="VARCHAR" />
+    <result column="space_no" property="spaceNo" jdbcType="VARCHAR" />
+    <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+    <result column="fee_type" property="feeType" jdbcType="INTEGER" />
+    <result column="invoice_batch" property="invoiceBatch" jdbcType="VARCHAR" />
+    <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+    <result column="arrear_id" property="arrearId" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="is_check" property="isCheck" jdbcType="INTEGER" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="req_serial" property="reqSerial" jdbcType="VARCHAR" />
+    <result column="trace_no" property="traceNo" jdbcType="VARCHAR" />
+    <result column="reference_no" property="referenceNo" jdbcType="VARCHAR" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="PaymentAmountGroupResultMap" type="com.zycj.tcc.vo.PaymentAmountGroupInfo">
+  	<result column="type" property="type" jdbcType="INTEGER" />
+  	<result column="amount" property="amount" jdbcType="DECIMAL" />
+  </resultMap>
+  <select id="selectCheckInfoTodayByEmpNo" resultType="com.zycj.tcc.vo.CheckListInfo" parameterType="java.util.Map" >
+    <![CDATA[
+    SELECT SUM(real_pay) amount
+	FROM payment_record p 
+	WHERE p.charge_emp = #{empNo}
+	AND p.pay_time < #{nowTime}
+	AND p.pay_time >= CURDATE()
+	AND p.pay_type = 1
+	AND p.is_check = 0
+	AND p.fee_type != 3 
+	]]>
+  </select>
+  <update id="updateCheckStatusByDateEmpNo" parameterType="java.util.Map">
+  		UPDATE payment_record p 
+		SET p.is_check =1,
+		p.check_time = NOW(),
+		p.update_time = NOW()
+		WHERE 1=1 
+		<if test="isToday==0">
+			AND DATE_FORMAT(p.pay_time,'%Y%m%d') = DATE_FORMAT(#{checkDate},'%Y%m%d')
+		</if>
+		<if test="isToday==1">
+			<![CDATA[
+			AND p.pay_time < #{checkTime}
+			AND p.pay_time >= CURDATE()
+			]]>
+		</if>
+		AND p.charge_emp = #{empNo}
+		AND p.pay_type = 1
+		AND p.fee_type != 3
+		AND p.is_check = 0
+  </update>
+   <update id="updateReCheckStatusByEmpNo" parameterType="java.util.Map">
+   		update manage_report_day set amount_uncheck=0,count_uncheck=0 where sum_date = #{checkDateSql} and emp_no=#{empNo} 
+  </update>
+  <select id="selectCheckPaymentRecordCountBycheckTime" resultType="java.lang.Integer" parameterType="java.util.Map">
+  	select count(*) from payment_record p
+  		where 
+  		p.pay_type = 1
+  			<![CDATA[
+			AND p.pay_time < #{checkTime}
+			AND p.pay_time >= CURDATE()
+			]]>
+		AND p.charge_emp = #{empNo}
+		AND p.fee_type != 3
+  </select>
+  <select id="selectNoCheckAmountTotalByEmpNoForTime" resultType="java.math.BigDecimal" parameterType="java.util.Map" >
+    <![CDATA[
+	    SELECT 
+	    (CASE WHEN SUM(p.real_pay)> 0 THEN SUM(p.real_pay) ELSE 0 END) amount 
+		FROM payment_record p 
+		WHERE p.charge_emp = #{empNo}
+		AND p.pay_time < #{nowTime}
+		AND p.pay_time >= CURDATE()
+		AND p.pay_type = 1
+		AND p.is_check = 0
+		AND p.fee_type != 3 
+	]]>
+  </select>
+  <select id="selectNoCheckAmountTotalByEmpNoForDate" resultType="java.math.BigDecimal" parameterType="java.lang.String" >
+    <![CDATA[
+	    SELECT 
+	    (CASE WHEN SUM(p.real_pay)> 0 THEN SUM(p.real_pay) ELSE 0 END) amount 
+		FROM payment_record p 
+		WHERE p.charge_emp = #{empNo}
+		AND DATE_FORMAT(p.pay_time,'%Y%m%d')=DATE_FORMAT(date_sub(CURDATE(),interval 1 day),'%Y%m%d')
+		AND p.pay_type = 1
+		AND p.is_check = 0
+		AND p.fee_type != 3 
+	]]>
+  </select>
+  
+  <select id="selectPaymentAmountByDateForGroupFeeType" resultMap="PaymentAmountGroupResultMap"  parameterType="java.util.Map">
+  		SELECT 
+		pr.fee_type type,
+		SUM(pr.real_pay) amount
+		FROM payment_record pr 
+		WHERE 
+		pr.charge_emp=#{empNo} 
+		AND  DATE_FORMAT(pr.pay_time,'%Y%m%d') = DATE_FORMAT(#{queryDate},'%Y%m%d') 
+		AND pr.fee_type!=3 
+		GROUP BY pr.fee_type
+  </select>
+  
+  <select id="findPaymentRecordByOrderId" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+  		SELECT 
+		pr.real_pay 
+		FROM payment_record pr 
+		WHERE 
+		pr.order_id=#{orderId}
+  </select>
+  
+  <select id="selectPaymentAmountByDateForGroupPayType" resultMap="PaymentAmountGroupResultMap"  parameterType="java.util.Map">
+		SELECT 
+		pr.pay_type type,
+		SUM(pr.real_pay) amount 
+		FROM payment_record pr 
+		WHERE 
+		pr.charge_emp=#{empNo} 
+		AND  DATE_FORMAT(pr.pay_time,'%Y%m%d') = DATE_FORMAT(#{queryDate},'%Y%m%d') 
+		AND pr.fee_type!=3 
+		GROUP BY pr.pay_type
+  </select>
+</mapper>

@@ -1,0 +1,14 @@
+<ul>
+    <#if (top6NewsList?? && 0 < top6NewsList?size)>
+        <#list top6NewsList as l>
+            <a href="/upload/news_${l.id}.html" title="${l.title!}">
+                <li>
+                    <div>
+                        <span class="news_content_title"><#if (31 < l.title?length)>${l.title[0..30]}...<#else>${l.title}</#if></span>
+                        <span class="news_content_time">${l.date?string('yyyy-MM-dd')}</span>
+                    </div>
+                </li>
+            </a>
+        </#list>
+    </#if>
+</ul>

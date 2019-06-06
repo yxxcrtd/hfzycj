@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zycj.tcc.mybatis.mapper.ArrearMapper" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.Arrear" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="car_no" property="carNo" jdbcType="VARCHAR" />
+    <result column="car_type" property="carType" jdbcType="INTEGER" />
+    <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+    <result column="space_no" property="spaceNo" jdbcType="VARCHAR" />
+    <result column="in_emp" property="inEmp" jdbcType="VARCHAR" />
+    <result column="in_time" property="inTime" jdbcType="TIMESTAMP" />
+    <result column="out_time" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="arrear_amount" property="arrearAmount" jdbcType="DECIMAL" />
+    <result column="arrear_type" property="arrearType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="charge_emp" property="chargeEmp" jdbcType="VARCHAR" />
+    <result column="pos_no" property="posNo" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="req_serial" property="reqSerial" jdbcType="VARCHAR" />
+    <result column="old_amount" property="oldAmount" jdbcType="DECIMAL" />
+    <result column="modify_remark" property="modifyRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, serial_no, order_id, car_no, car_type, section_no, section_name, space_no, in_emp, 
+    in_time, out_time, arrear_amount, arrear_type, status, charge_emp, pos_no, pay_time, 
+    pay_type, pay_amount, create_time, update_time, req_serial, old_amount, modify_remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zycj.tcc.domain.ArrearExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from arrear
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from arrear
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from arrear
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zycj.tcc.domain.ArrearExample" >
+    delete from arrear
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zycj.tcc.domain.Arrear" >
+    insert into arrear (id, serial_no, order_id, 
+      car_no, car_type, section_no, 
+      section_name, space_no, in_emp, 
+      in_time, out_time, arrear_amount, 
+      arrear_type, status, charge_emp, 
+      pos_no, pay_time, pay_type, 
+      pay_amount, create_time, update_time, 
+      req_serial, old_amount, modify_remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{serialNo,jdbcType=VARCHAR}, #{orderId,jdbcType=INTEGER}, 
+      #{carNo,jdbcType=VARCHAR}, #{carType,jdbcType=INTEGER}, #{sectionNo,jdbcType=VARCHAR}, 
+      #{sectionName,jdbcType=VARCHAR}, #{spaceNo,jdbcType=VARCHAR}, #{inEmp,jdbcType=VARCHAR}, 
+      #{inTime,jdbcType=TIMESTAMP}, #{outTime,jdbcType=TIMESTAMP}, #{arrearAmount,jdbcType=DECIMAL}, 
+      #{arrearType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{chargeEmp,jdbcType=VARCHAR}, 
+      #{posNo,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, #{payType,jdbcType=INTEGER}, 
+      #{payAmount,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{reqSerial,jdbcType=VARCHAR}, #{oldAmount,jdbcType=DECIMAL}, #{modifyRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zycj.tcc.domain.Arrear" >
+    insert into arrear
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serialNo != null" >
+        serial_no,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="carNo != null" >
+        car_no,
+      </if>
+      <if test="carType != null" >
+        car_type,
+      </if>
+      <if test="sectionNo != null" >
+        section_no,
+      </if>
+      <if test="sectionName != null" >
+        section_name,
+      </if>
+      <if test="spaceNo != null" >
+        space_no,
+      </if>
+      <if test="inEmp != null" >
+        in_emp,
+      </if>
+      <if test="inTime != null" >
+        in_time,
+      </if>
+      <if test="outTime != null" >
+        out_time,
+      </if>
+      <if test="arrearAmount != null" >
+        arrear_amount,
+      </if>
+      <if test="arrearType != null" >
+        arrear_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="chargeEmp != null" >
+        charge_emp,
+      </if>
+      <if test="posNo != null" >
+        pos_no,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="payAmount != null" >
+        pay_amount,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="reqSerial != null" >
+        req_serial,
+      </if>
+      <if test="oldAmount != null" >
+        old_amount,
+      </if>
+      <if test="modifyRemark != null" >
+        modify_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="serialNo != null" >
+        #{serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="carNo != null" >
+        #{carNo,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        #{carType,jdbcType=INTEGER},
+      </if>
+      <if test="sectionNo != null" >
+        #{sectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionName != null" >
+        #{sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceNo != null" >
+        #{spaceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inEmp != null" >
+        #{inEmp,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null" >
+        #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrearAmount != null" >
+        #{arrearAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="arrearType != null" >
+        #{arrearType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="chargeEmp != null" >
+        #{chargeEmp,jdbcType=VARCHAR},
+      </if>
+      <if test="posNo != null" >
+        #{posNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reqSerial != null" >
+        #{reqSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAmount != null" >
+        #{oldAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="modifyRemark != null" >
+        #{modifyRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zycj.tcc.domain.ArrearExample" resultType="java.lang.Integer" >
+    select count(*) from arrear
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update arrear
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.serialNo != null" >
+        serial_no = #{record.serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.carNo != null" >
+        car_no = #{record.carNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carType != null" >
+        car_type = #{record.carType,jdbcType=INTEGER},
+      </if>
+      <if test="record.sectionNo != null" >
+        section_no = #{record.sectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sectionName != null" >
+        section_name = #{record.sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spaceNo != null" >
+        space_no = #{record.spaceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inEmp != null" >
+        in_emp = #{record.inEmp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inTime != null" >
+        in_time = #{record.inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.outTime != null" >
+        out_time = #{record.outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.arrearAmount != null" >
+        arrear_amount = #{record.arrearAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.arrearType != null" >
+        arrear_type = #{record.arrearType,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.chargeEmp != null" >
+        charge_emp = #{record.chargeEmp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.posNo != null" >
+        pos_no = #{record.posNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=INTEGER},
+      </if>
+      <if test="record.payAmount != null" >
+        pay_amount = #{record.payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reqSerial != null" >
+        req_serial = #{record.reqSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldAmount != null" >
+        old_amount = #{record.oldAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.modifyRemark != null" >
+        modify_remark = #{record.modifyRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update arrear
+    set id = #{record.id,jdbcType=INTEGER},
+      serial_no = #{record.serialNo,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      car_no = #{record.carNo,jdbcType=VARCHAR},
+      car_type = #{record.carType,jdbcType=INTEGER},
+      section_no = #{record.sectionNo,jdbcType=VARCHAR},
+      section_name = #{record.sectionName,jdbcType=VARCHAR},
+      space_no = #{record.spaceNo,jdbcType=VARCHAR},
+      in_emp = #{record.inEmp,jdbcType=VARCHAR},
+      in_time = #{record.inTime,jdbcType=TIMESTAMP},
+      out_time = #{record.outTime,jdbcType=TIMESTAMP},
+      arrear_amount = #{record.arrearAmount,jdbcType=DECIMAL},
+      arrear_type = #{record.arrearType,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      charge_emp = #{record.chargeEmp,jdbcType=VARCHAR},
+      pos_no = #{record.posNo,jdbcType=VARCHAR},
+      pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+      pay_type = #{record.payType,jdbcType=INTEGER},
+      pay_amount = #{record.payAmount,jdbcType=DECIMAL},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      req_serial = #{record.reqSerial,jdbcType=VARCHAR},
+      old_amount = #{record.oldAmount,jdbcType=DECIMAL},
+      modify_remark = #{record.modifyRemark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zycj.tcc.domain.Arrear" >
+    update arrear
+    <set >
+      <if test="serialNo != null" >
+        serial_no = #{serialNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="carNo != null" >
+        car_no = #{carNo,jdbcType=VARCHAR},
+      </if>
+      <if test="carType != null" >
+        car_type = #{carType,jdbcType=INTEGER},
+      </if>
+      <if test="sectionNo != null" >
+        section_no = #{sectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionName != null" >
+        section_name = #{sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceNo != null" >
+        space_no = #{spaceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inEmp != null" >
+        in_emp = #{inEmp,jdbcType=VARCHAR},
+      </if>
+      <if test="inTime != null" >
+        in_time = #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        out_time = #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="arrearAmount != null" >
+        arrear_amount = #{arrearAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="arrearType != null" >
+        arrear_type = #{arrearType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="chargeEmp != null" >
+        charge_emp = #{chargeEmp,jdbcType=VARCHAR},
+      </if>
+      <if test="posNo != null" >
+        pos_no = #{posNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=INTEGER},
+      </if>
+      <if test="payAmount != null" >
+        pay_amount = #{payAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reqSerial != null" >
+        req_serial = #{reqSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAmount != null" >
+        old_amount = #{oldAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="modifyRemark != null" >
+        modify_remark = #{modifyRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zycj.tcc.domain.Arrear" >
+    update arrear
+    set serial_no = #{serialNo,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER},
+      car_no = #{carNo,jdbcType=VARCHAR},
+      car_type = #{carType,jdbcType=INTEGER},
+      section_no = #{sectionNo,jdbcType=VARCHAR},
+      section_name = #{sectionName,jdbcType=VARCHAR},
+      space_no = #{spaceNo,jdbcType=VARCHAR},
+      in_emp = #{inEmp,jdbcType=VARCHAR},
+      in_time = #{inTime,jdbcType=TIMESTAMP},
+      out_time = #{outTime,jdbcType=TIMESTAMP},
+      arrear_amount = #{arrearAmount,jdbcType=DECIMAL},
+      arrear_type = #{arrearType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      charge_emp = #{chargeEmp,jdbcType=VARCHAR},
+      pos_no = #{posNo,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      pay_type = #{payType,jdbcType=INTEGER},
+      pay_amount = #{payAmount,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      req_serial = #{reqSerial,jdbcType=VARCHAR},
+      old_amount = #{oldAmount,jdbcType=DECIMAL},
+      modify_remark = #{modifyRemark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

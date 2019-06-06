@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wl.ko.home">
+	<!-- 查询出所有的城市 -->
+	<select id="getAllCity" parameterType="map" resultType="com.wl.ko.home.model.CityInfo">
+		select city_id,city_parentId,city_name from city_tbl where city_status = 1 and city_parentId=#{city_parentId}
+	</select>
+	<!-- 查询出所有的4S店 -->
+	<select id="getAllShop" parameterType="map" resultType="com.wl.ko.home.model.Shop">
+		select id,s_fullname,s_detailaddress from shop where s_provice=#{provice_id} and s_city=#{city_id}
+	</select>
+	
+	<!-- 查询出单一4S店 -->
+	<select id="getOneShop" parameterType="map" resultType="com.wl.ko.home.model.Shop">
+		select id,s_fullname,s_detailaddress from shop where id=#{id}
+	</select>
+	<!-- 查询出所有的品牌信息 -->
+	<select id="getAllBrand" parameterType="map" resultType="com.wl.ko.home.model.BrandInfo">
+		select bi.brand_name as name from brand_info bi 
+	</select>
+	<!-- 查询出想要的价格信息 -->
+	<select id="getPrice" parameterType="map" resultType="String">
+		select feilv from price_info where #{buy_price} between startprice and endprice
+	</select>
+	<insert id="addinstallpre" parameterType="com.wl.ko.home.model.Installpre">
+		insert into installpre(id,shop_id,catagory,name,mobile,time,createtime,address,carmodel)
+		values(
+			#{id,jdbcType=VARCHAR},
+			#{shop_id},
+			#{catagory},
+			#{name,jdbcType=VARCHAR},
+			#{mobile,jdbcType=VARCHAR},
+			#{time,jdbcType=TIMESTAMP},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{address,jdbcType=VARCHAR},
+			#{carmodel,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="addinstallpres" parameterType="com.wl.ko.home.model.Installpre">
+		insert into installpre(id,name,mobile,createtime,carmodel)
+		values(
+			#{id,jdbcType=VARCHAR},
+			#{name,jdbcType=VARCHAR},
+			#{mobile,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{carmodel,jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- 判断对应的数量 -->
+	<select id="bookisok" parameterType="map" resultType="Integer">
+		select count(1) from installpre where createtime between #{starttime,jdbcType=TIMESTAMP} and #{endtime,jdbcType=TIMESTAMP}
+	</select>
+	
+	<!-- 判断对应的数量 -->
+	<select id="mobilebookisok" parameterType="map" resultType="Integer">
+		<!-- select count(1) from installpre where name=#{truename,jdbcType=VARCHAR} and mobile=#{mobile,jdbcType=TIMESTAMP} -->
+		 select count(1) from installpre where mobile=#{mobile,jdbcType=TIMESTAMP}
+	</select>
+
+	<insert id="userOrderInfo" parameterType="com.wl.ko.home.model.UserOrderInfo">
+	insert into order_info(id,flag,user_id,status,money,paytime,createtime) 
+		values(
+			#{id,jdbcType=VARCHAR},
+			#{flag,jdbcType=VARCHAR},
+			#{user_id,jdbcType=VARCHAR},
+			#{status,jdbcType=VARCHAR},
+			#{money,jdbcType=VARCHAR},
+			#{paytime,jdbcType=TIMESTAMP},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<!-- 新增相关的信息 -->
+	<insert id="addUserInfo" parameterType="com.wl.ko.home.model.UserInfo">
+		insert into user_info(id,user_name,phone,address,newbuyprice,
+		carmodel,carline,buytime,carbrand,createtime) 
+		values(
+			#{id,jdbcType=VARCHAR},
+			#{user_name,jdbcType=VARCHAR},
+			#{phone,jdbcType=VARCHAR},
+			#{address,jdbcType=VARCHAR},
+			#{newbuyprice,jdbcType=VARCHAR},
+			#{carmodel,jdbcType=VARCHAR},
+			#{carline,jdbcType=VARCHAR},
+			#{buytime,jdbcType=VARCHAR},
+			#{carbrand,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<!-- 查询出openid是否存在，如果存在那么就直接发送红包请求，如果不存在，那么就执行添加的操作 -->
+	<select id="getOpenId" parameterType="map" resultType="com.wl.ko.home.model.WxShare">
+		select openid,flag from wxshare where openid=#{openid} and activtiy_id=#{activtiy_id}
+	</select>
+	
+	
+	<select id="getMoney" parameterType="map" resultType="com.wl.ko.home.model.BaseMoney">
+		select openid,activtiy_id,money from getmoney where openid=#{openid} and activtiy_id=#{activtiy_id}
+	</select>
+	<!-- 新增获奖信息 -->
+	<select id="addbasemoney" parameterType="com.wl.ko.home.model.BaseMoney">
+		insert into getmoney(openid,activtiy_id,money,createtime) values(
+			#{openid,jdbcType=VARCHAR},
+			#{activtiy_id,jdbcType=VARCHAR},
+			#{money,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+	</select>
+	
+	<insert id="addOpenid" parameterType="com.wl.ko.home.model.WxShare">
+		insert into wxshare(openid,flag,activtiy_id) values(
+			#{openid,jdbcType=VARCHAR},
+			#{flag,jdbcType=VARCHAR},
+			#{activtiy_id,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="updateOpenid" parameterType="com.wl.ko.home.model.WxShare">
+		update wxshare set flag=#{flag} ,activtiy_id=#{activtiy_id} where openid=#{openid}
+	</update>
+	
+	<!-- 查询出所有的预约信息 -->
+	<select id="allbooking" parameterType="map" resultType="com.wl.ko.home.model.Installpre">
+		select name,mobile,address,time,createtime,carmodel
+		from installpre where time between #{starttime,jdbcType=TIMESTAMP} and #{endtime,jdbcType=TIMESTAMP}
+	</select>
+</mapper>

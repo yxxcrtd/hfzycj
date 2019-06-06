@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcc.park.api.mybatis.ParkLotMapper" >
+  <resultMap id="BaseResultMap" type="com.tcc.park.api.domain.ParkLot" >
+    <id column="park_id" property="parkId" jdbcType="INTEGER" />
+    <result column="company_id" property="companyId" jdbcType="INTEGER" />
+    <result column="park_name" property="parkName" jdbcType="VARCHAR" />
+    <result column="park_total" property="parkTotal" jdbcType="INTEGER" />
+    <result column="park_now" property="parkNow" jdbcType="INTEGER" />
+    <result column="longitude_start" property="longitudeStart" jdbcType="DECIMAL" />
+    <result column="latitude_start" property="latitudeStart" jdbcType="DECIMAL" />
+    <result column="longitude_end" property="longitudeEnd" jdbcType="DECIMAL" />
+    <result column="latitude_end" property="latitudeEnd" jdbcType="DECIMAL" />
+    <result column="points_other" property="pointsOther" jdbcType="VARCHAR" />
+    <result column="park_type" property="parkType" jdbcType="INTEGER" />
+    <result column="park_location" property="parkLocation" jdbcType="VARCHAR" />
+    <result column="contact_info" property="contactInfo" jdbcType="VARCHAR" />
+    <result column="business_time" property="businessTime" jdbcType="VARCHAR" />
+    <result column="fee_type" property="feeType" jdbcType="INTEGER" />
+    <result column="charge_explain" property="chargeExplain" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    park_id, company_id, park_name, park_total, park_now, longitude_start, latitude_start, 
+    longitude_end, latitude_end, points_other, park_type, park_location, contact_info, 
+    business_time, fee_type, charge_explain, update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from park_lot
+    where park_id = #{parkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from park_lot
+    where park_id = #{parkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.tcc.park.api.domain.ParkLot" >
+    insert into park_lot (park_id, company_id, park_name, 
+      park_total, park_now, longitude_start, 
+      latitude_start, longitude_end, latitude_end, 
+      points_other, park_type, park_location, 
+      contact_info, business_time, fee_type, 
+      charge_explain, update_time, create_time
+      )
+    values (#{parkId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{parkName,jdbcType=VARCHAR}, 
+      #{parkTotal,jdbcType=INTEGER}, #{parkNow,jdbcType=INTEGER}, #{longitudeStart,jdbcType=DECIMAL}, 
+      #{latitudeStart,jdbcType=DECIMAL}, #{longitudeEnd,jdbcType=DECIMAL}, #{latitudeEnd,jdbcType=DECIMAL}, 
+      #{pointsOther,jdbcType=VARCHAR}, #{parkType,jdbcType=INTEGER}, #{parkLocation,jdbcType=VARCHAR}, 
+      #{contactInfo,jdbcType=VARCHAR}, #{businessTime,jdbcType=VARCHAR}, #{feeType,jdbcType=INTEGER}, 
+      #{chargeExplain,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tcc.park.api.domain.ParkLot" >
+    insert into park_lot
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="parkId != null" >
+        park_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="parkName != null" >
+        park_name,
+      </if>
+      <if test="parkTotal != null" >
+        park_total,
+      </if>
+      <if test="parkNow != null" >
+        park_now,
+      </if>
+      <if test="longitudeStart != null" >
+        longitude_start,
+      </if>
+      <if test="latitudeStart != null" >
+        latitude_start,
+      </if>
+      <if test="longitudeEnd != null" >
+        longitude_end,
+      </if>
+      <if test="latitudeEnd != null" >
+        latitude_end,
+      </if>
+      <if test="pointsOther != null" >
+        points_other,
+      </if>
+      <if test="parkType != null" >
+        park_type,
+      </if>
+      <if test="parkLocation != null" >
+        park_location,
+      </if>
+      <if test="contactInfo != null" >
+        contact_info,
+      </if>
+      <if test="businessTime != null" >
+        business_time,
+      </if>
+      <if test="feeType != null" >
+        fee_type,
+      </if>
+      <if test="chargeExplain != null" >
+        charge_explain,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="parkId != null" >
+        #{parkId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="parkName != null" >
+        #{parkName,jdbcType=VARCHAR},
+      </if>
+      <if test="parkTotal != null" >
+        #{parkTotal,jdbcType=INTEGER},
+      </if>
+      <if test="parkNow != null" >
+        #{parkNow,jdbcType=INTEGER},
+      </if>
+      <if test="longitudeStart != null" >
+        #{longitudeStart,jdbcType=DECIMAL},
+      </if>
+      <if test="latitudeStart != null" >
+        #{latitudeStart,jdbcType=DECIMAL},
+      </if>
+      <if test="longitudeEnd != null" >
+        #{longitudeEnd,jdbcType=DECIMAL},
+      </if>
+      <if test="latitudeEnd != null" >
+        #{latitudeEnd,jdbcType=DECIMAL},
+      </if>
+      <if test="pointsOther != null" >
+        #{pointsOther,jdbcType=VARCHAR},
+      </if>
+      <if test="parkType != null" >
+        #{parkType,jdbcType=INTEGER},
+      </if>
+      <if test="parkLocation != null" >
+        #{parkLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null" >
+        #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTime != null" >
+        #{businessTime,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="chargeExplain != null" >
+        #{chargeExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tcc.park.api.domain.ParkLot" >
+    update park_lot
+    <set >
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="parkName != null" >
+        park_name = #{parkName,jdbcType=VARCHAR},
+      </if>
+      <if test="parkTotal != null" >
+        park_total = #{parkTotal,jdbcType=INTEGER},
+      </if>
+      <if test="parkNow != null" >
+        park_now = #{parkNow,jdbcType=INTEGER},
+      </if>
+      <if test="longitudeStart != null" >
+        longitude_start = #{longitudeStart,jdbcType=DECIMAL},
+      </if>
+      <if test="latitudeStart != null" >
+        latitude_start = #{latitudeStart,jdbcType=DECIMAL},
+      </if>
+      <if test="longitudeEnd != null" >
+        longitude_end = #{longitudeEnd,jdbcType=DECIMAL},
+      </if>
+      <if test="latitudeEnd != null" >
+        latitude_end = #{latitudeEnd,jdbcType=DECIMAL},
+      </if>
+      <if test="pointsOther != null" >
+        points_other = #{pointsOther,jdbcType=VARCHAR},
+      </if>
+      <if test="parkType != null" >
+        park_type = #{parkType,jdbcType=INTEGER},
+      </if>
+      <if test="parkLocation != null" >
+        park_location = #{parkLocation,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfo != null" >
+        contact_info = #{contactInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTime != null" >
+        business_time = #{businessTime,jdbcType=VARCHAR},
+      </if>
+      <if test="feeType != null" >
+        fee_type = #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="chargeExplain != null" >
+        charge_explain = #{chargeExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where park_id = #{parkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tcc.park.api.domain.ParkLot" >
+    update park_lot
+    set company_id = #{companyId,jdbcType=INTEGER},
+      park_name = #{parkName,jdbcType=VARCHAR},
+      park_total = #{parkTotal,jdbcType=INTEGER},
+      park_now = #{parkNow,jdbcType=INTEGER},
+      longitude_start = #{longitudeStart,jdbcType=DECIMAL},
+      latitude_start = #{latitudeStart,jdbcType=DECIMAL},
+      longitude_end = #{longitudeEnd,jdbcType=DECIMAL},
+      latitude_end = #{latitudeEnd,jdbcType=DECIMAL},
+      points_other = #{pointsOther,jdbcType=VARCHAR},
+      park_type = #{parkType,jdbcType=INTEGER},
+      park_location = #{parkLocation,jdbcType=VARCHAR},
+      contact_info = #{contactInfo,jdbcType=VARCHAR},
+      business_time = #{businessTime,jdbcType=VARCHAR},
+      fee_type = #{feeType,jdbcType=INTEGER},
+      charge_explain = #{chargeExplain,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where park_id = #{parkId,jdbcType=INTEGER}
+  </update>
+</mapper>

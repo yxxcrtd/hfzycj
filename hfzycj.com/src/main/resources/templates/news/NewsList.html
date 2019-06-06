@@ -1,0 +1,41 @@
+<#include "MainTop.html" />
+    <div id="search">
+        <form>
+            <span class="condition">
+                标题：
+                <input type="text" name="k" value="${k}" class="input200" onMouseOver="this.select();" placeholder="请输入标题名称"/>
+                <input type="submit" value="查询" class="button"/>
+            </span>
+        </form>
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr id="thead">
+            <td width="10%">ID</td>
+            <td width="15%">资讯分类</td>
+            <td width="40%" class="left">标题</td>
+            <td width="10%">点击量</td>
+            <td width="15%">发布日期</td>
+            <td width="10%">操作</td>
+        </tr>
+        <#if (list?? && 0 < list?size)>
+            <#list list as l>
+                <tr onMouseOver="changeBgColor(this, '#ECECEC');" onMouseOut="changeBgColor(this, '#FFFFFF');">
+                    <td>${l.id}</td>
+                    <td><#list newsTypeMap?keys as k><#if (l.type == k)>${newsTypeMap[k]}</#if></#list></td>
+                    <td class="left">${l.title}</td>
+                    <td>${l.hit}</td>
+                    <td>${l.date?string('yyyy-MM-dd')}</td>
+                    <td><a href="${request.contextPath}/manage/news/edit/${l.id}">修改</a></td>
+                </tr>
+            </#list>
+        <#else>
+            <tr>
+                <td colspan="6">没有数据！</td>
+            </tr>
+        </#if>
+    </table>
+
+    <div id="pageNav"><span class="condition">共<span class="blue">${count}</span>条数据</span><#include "Pager.html" /></div>
+<#include "MainBottom.html" />
+

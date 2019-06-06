@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script language="javaScript" src="/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            downParkCacheData();
+        });
+        function leo() {//当删除一行后，对各行重新建立索引
+            var tableobj = document.getElementById("table_cache");//getElementByIdx
+            for (i = 0; i < tableobj.rows.length; i++) {
+                tableobj.deleteRow(i);
+//                tableobj.rows[i].cells[2].innerHTML="<input type='button' value='删除' onclickt='delete_row("+i+");leo()'>";
+            }
+        }
+        //获取停车场数据
+        function downParkCacheData() {
+            $.ajax({
+                type: "GET",  //提交方式POST
+                url: "/site/parkcachedata",//路径${surplus}
+                success: function (result) {//返回数据根据结果进行相应的处理
+                    var divcacheParkList2 = document.getElementById("cacheParkList2");
+                    var table_cache = document.createElement("table");//创建table
+                    table_cache.id = "table_cache_data";//cacheTableDatas
+                    table_cache.cellPadding = "0";
+                    table_cache.cellSpacing = "0";
+                    table_cache.style.cssText = "width: 319px;";// cellspacing="0" cellpadding="0"";
+                    var jsondata = jQuery.parseJSON(result).listMap;
+                    for (var i = 0; i < jsondata.length; i++) {
+                        var rowobj = table_cache.insertRow(table_cache.rows.length);
+                        var cell1 = rowobj.insertCell(rowobj.cells.length);
+                        var cell2 = rowobj.insertCell(rowobj.cells.length);
+                        var cell3 = rowobj.insertCell(rowobj.cells.length);
+                        cell1.setAttribute("class", "td_1");
+                        cell2.setAttribute("class", "td_2");
+                        cell3.setAttribute("class", "td_3");
+                        //0离线，1空闲，2紧张
+                        if (jsondata[i]["countStatus"] == 0) {
+                            cell1.innerHTML = "<img src='/images/leave.png' style='vertical-align:middle;'/>";
+                        }
+                        else if (jsondata[i]["countStatus"] == 1) {
+//                            cell1.innerHTML = "1空闲";
+                            cell1.innerHTML = "<img src='/images/free.png' style='vertical-align:middle;'/>";
+                        }
+                        else if (jsondata[i]["countStatus"] == 2) {
+//                            cell1.innerHTML = "2紧张";
+                            cell1.innerHTML = "<img src='/images/nervous.png' style='vertical-align:middle;'/>";
+                        }
+
+                        cell2.innerHTML = jsondata[i]["name"];
+                        cell3.innerHTML = jsondata[i]["surplus"] + "/" + jsondata[i]["total"];
+//                        cell3.innerHTML = jsondata[i]["surplus"];
+                    }
+//                    divcacheParkList2.removeChild(table_cache);
+                    if (document.getElementById("table_cache_data")) {
+                        divcacheParkList2.removeChild(document.getElementById("table_cache_data"));
+                        divcacheParkList2.appendChild(table_cache);
+                    }
+                    else {
+                        divcacheParkList2.appendChild(table_cache);
+                    }
+
+                },
+                error: function (result) {//返回数据根据结果进行相应的处理pswNoRight
+                    console.info("userLogin()error:" + result);
+                }
+            });
+        }
+    </script>
+    <style type="text/css">
+        body {
+            background-color: #ffffff;
+            color: #666666;
+        }
+        div#cacheParkList {
+            background-color: #ffffff;
+            width: 319px;
+            border: 5px solid #ffffff;
+            -moz-border-top-colors: #f1f1f1 #f1f1f1 #f1f1f1 #ffffff #ffffff;
+            -moz-border-right-colors: #f1f1f1 #f1f1f1 #f1f1f1 #ffffff #ffffff;
+            -moz-border-left-colors: #f1f1f1 #f1f1f1 #f1f1f1 #ffffff #ffffff;
+        }
+
+        div#cacheParkList2 {
+            background-color: #ffffff;
+            width: 319px;
+            border: 5px solid #ffffff;
+            -moz-border-right-colors: #f1f1f1 #f1f1f1 #f1f1f1 #ffffff #ffffff;
+            -moz-border-bottom-colors: #f1f1f1 #f1f1f1 #f1f1f1 #ffffff #ffffff;
+            -moz-border-left-colors: #f1f1f1 #f1f1f1 #f1f1f1 #ffffff #ffffff;
+            margin-top: -1px;
+        }
+
+        td#td1, td#td2, td#td3 {
+            width: 106px;
+            border-bottom: 1px solid #dedede;
+            text-align: center;
+            font-size: 16px;
+            height: 58px;
+            vertical-align: middle;
+        }
+
+        td#td4 {
+            text-align: right;
+            font-size: 20px;
+            height: 46px;
+            font-weight: bold;
+            margin-right: 0px;
+            border-bottom: 1px solid #dedede;
+        }
+
+        .td_1 {
+            width: 35px;
+            text-align: right;
+        }
+
+        .td_2 {
+            width: 150px;
+            text-align: left;
+            font-size: 16px;
+            height: 44px;
+            vertical-align: middle;
+            padding: 0 5px;
+        }
+
+        .td_3 {
+            width: 100px;
+            text-align: left;
+            font-size: 16px;
+            height: 44px;
+            vertical-align: middle;
+        }
+    </style>
+
+</head>
+<body>
+<div id="cacheParkList">
+    <table cellspacing="0" cellpadding="1">
+        <tr>
+            <td id="td1" style="width: 85px;padding-left: 0px;"><img src="/images/nervous.png"
+                                                                     style="vertical-align:middle;"/> 紧张
+            </td>
+            <td id="td2" style="width: 95px;"><img src="/images/free.png" style="vertical-align:middle;"/> 空闲</td>
+            <td id="td3" style="width: 95px;"><img src="/images/leave.png" style="vertical-align:middle;"/> 离线</td>
+        </tr>
+        <tr>
+            <td id="td4" colspan="3">
+                <table style="width: 319px;" cellspacing="0" cellpadding="1">
+                    <tr>
+                        <td id="td5" style="padding-right: 80px; border: 0px solid #dedede;">停车场</td>
+                        <td id="td6" style=" border: 0px solid #dedede;text-align: left">剩余车位</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="cacheParkList2">
+</div>
+<style type="text/css">
+    table tr td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    #cacheParkList {
+        width: 300px;
+        /*height: 600px;*/
+        margin: 0 auto;
+        border: 1px solid #696969;
+        min-height: 20px;
+        border-bottom: none;
+    }
+
+    #cacheParkList2 {
+        width: 300px;
+        /*height: 600px;*/
+        margin: 0 auto;
+        border: 1px solid #696969;
+        min-height: 400px;
+    }
+
+    #ulTitle {
+        list-style-type: none;
+        width: 300px;
+        height: 50px;
+        padding-left: 0px;
+        margin-left: 0px;
+        border: 0px solid #696969;
+    }
+
+    #liTitle {
+        width: 299px;
+        height: 50px;
+        padding-left: 4px;
+        margin-left: 0px;
+        border-bottom: 1px solid #696969;
+        text-align: center;
+    }
+
+    #mclist {
+        width: 260px;
+        /*margin-left: 0;*/
+        margin-top: 2px;
+        border: 1px solid #696969;
+        position: relative;
+        z-index: 1;
+        margin-left: 390px;
+    }
+
+    .td {
+        text-align: left;
+    }
+</style>
+</body>
+</html>

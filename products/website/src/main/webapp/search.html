@@ -1,0 +1,10 @@
+<form action="/site/parksearch" method="post" id="searchForm">
+    <input type="text" name="keyword" id="keyword" value="停车场／商圈／地标建筑"
+           onfocus="if (value=='停车场／商圈／地标建筑') { value = '' }" onblur="if ('' == value) { value='停车场／商圈／地标建筑' }"/>
+    <a href="javascript:void (0); onclick = submitPost();">搜索</a>
+</form>
+<script type="text/javascript">
+    function submitPost() {
+        document.getElementById("searchForm").submit();
+    }
+</script>

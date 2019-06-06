@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <div id="seo"></div>
+        <link rel="stylesheet" type="text/css" href="/css/style.min.css"/>
+    </head>
+
+    <body>
+        <div id="content">
+            <div id="fixedLayer"></div>
+            <div id="parkcacheLayer"></div>
+
+            <div id="header">
+                <div id="logo"></div>
+                <div id="search"></div>
+            </div>
+            <div class="extend">
+                <div id="nav">
+                    <a href="/" id="current">首页</a>
+                    <a href="/site/parksearch">停车场</a>
+                    <a href="/upload/news.html">新闻资讯</a>
+                    <a href="/upload/notices.html">通知公告</a>
+                    <a href="/upload/rules.html">政策法规</a>
+                    <a href="/upload/feedback.html">公众监督</a>
+                    <!--<a href="/upload/vote.html">投票调查</a>-->
+                    <a href="#app" id="last">丰台停车APP</a>
+                </div>
+            </div>
+            <div class="gap_row_20"></div>
+            <div id="map"></div>
+            <div class="gap_row_30"></div>
+            <div id="information">
+                <div id="index_information_left"></div>
+                <div id="index_information_right">
+                    <div id="index_information_right_top">
+                        <div id="index_information_right_top_left"></div>
+                        <div id="index_information_right_top_right"></div>
+                    </div>
+                    <div class="gap_row_30"></div>
+                    <div id="index_information_right_bottom"></div>
+                </div>
+            </div>
+            <div class="gap_row_50"></div>
+            <div id="park_feedback_vote">
+                <div id="park"></div>
+                <div id="park_right">
+                    <div id="feedback"></div>
+                    <div class="gap_row_50"></div>
+                    <!--<div id="vote"></div>-->
+                </div>
+            </div>
+            <div class="gap_row_50"></div>
+            <div id="extend_app">
+                <div id="app"><img src="./images/app.png"></div>
+            </div>
+            <div id="link"></div>
+            <div class="extend">
+                <div id="footer"></div>
+            </div>
+        </div>
+        <script language="javaScript" src="./js/jquery-1.11.1.min.js"></script>
+        <script language="javaScript" src="./js/jquery.jCarouselLite.min.js"></script>
+        <script language="javaScript" src="./js/public.min.js"></script>
+    </body>
+
+    <script src="es5.min.js"></script>
+    <script src="http://webapi.amap.com/maps?v=1.3&key=3c27d24d3757d478d9e8396cdbd5c875&plugin=AMap.PlaceSearch,AMap.AdvancedInfoWindow,AMap.Autocomplete"></script>
+    <script src="addToolbar.min.js"></script>
+    <script type="text/javascript">
+        var map = new AMap.Map("map", {
+            resizeEnable: true,
+            zoom: 16,
+            center: [116.432167, 39.866035],
+            scrollWheel: false
+        });
+    </script>
+</html>

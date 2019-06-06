@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CheckInfoDao" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.CheckInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="emp_no" property="empNo" jdbcType="VARCHAR" />
+    <result column="check_date" property="checkDate" jdbcType="DATE" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="real_amount" property="realAmount" jdbcType="DECIMAL" />
+    <result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+    <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, emp_no, check_date, amount, real_amount, check_status, check_time, create_time, 
+    update_time
+  </sql>
+  <select id="selectCheckInfoByEmpAndCheckDate" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from check_info
+    where emp_no=#{empNo} and DATE_FORMAT(check_date,'%Y%m%d')=DATE_FORMAT(#{checkDate},'%Y%m%d')
+  </select>
+</mapper>

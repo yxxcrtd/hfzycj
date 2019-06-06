@@ -1,0 +1,54 @@
+<div class="title">
+    <a href="/upload/feedback.html">公众监督</a>
+    <!--<span id="feedback_phone"><img src="./images/tel.png">010-88888888</span>-->
+</div>
+<div id="feedback_textarea">
+    <textarea id="feed" placeholder="欢迎您告诉我们您的意见和建议" maxlength="256" wrap="soft"></textarea>
+</div>
+<div id="feedback_submit">
+    <input type="text" id="name" placeholder="您的称呼" maxlength="32" />
+    <input type="text" id="phone" placeholder="您的联系手机或电话" maxlength="32" />
+    <span id="feedback_submit_a">提交</span>
+</div>
+<script type="text/javascript">
+    $(function() {
+        $("#feedback_submit_a").on("click", function () {
+            var feedNode = $("#feed");
+            var feedValue = feedNode.val().trim();
+            var nameNode = $("#name");
+            var nameValue = nameNode.val().trim();
+            var phoneNode = $("#phone");
+            var phoneValue = phoneNode.val().trim();
+            if (null == feedNode || "" == feedValue) {
+                feedNode.focus();
+                feedNode.css("border-color", "#FF0000");
+                return false;
+            } else {
+                feedNode.css("border-color", "#A2A2A2");
+            }
+            if (null == nameNode || "" == nameValue) {
+                nameNode.focus();
+                nameNode.css("border-color", "#FF0000");
+                return false;
+            } else {
+                nameNode.css("border-color", "#A2A2A2");
+            }
+            if (null == phoneNode || "" == phoneValue) {
+                phoneNode.css("border-color", "#FF0000");
+                phoneNode.focus();
+                return false;
+            } else {
+                phoneNode.css("border-color", "#A2A2A2");
+            }
+            $.post("/site/feedbackSave", { "category" : 1, "feed" : feedValue, "name" : nameValue, "phone" : phoneValue }, function(data) {
+                var obj = $.parseJSON(data);
+                if ("success" == obj.result) {
+                    feedNode.val("");
+                    nameNode.val("");
+                    phoneNode.val("");
+                    alert(obj.message);
+                }
+            }, "json");
+        });
+    });
+</script>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zycj.tcc.mybatis.mapper.PrePayCardSectionMapper" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.PrePayCardSection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="section_id" property="sectionId" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    p.id, p.card_no, p.section_id, p.start_time, p.end_time, r.section_name
+  </sql>
+  <select id="selectByCardNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from prepay_card_section p left join road_section r on p.section_id = r.id
+    where p.card_no = #{cardNo,jdbcType=VARCHAR}
+  </select>
+   <select id="getByCardNoSectionName" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from prepay_card_section p left join road_section r on p.section_id = r.id
+    where 
+    p.card_no = #{0,jdbcType=VARCHAR} 
+    and r.section_name = #{1,jdbcType=VARCHAR} 
+    and p.start_time &lt;= now()
+    and p.end_time &gt;= now()
+  </select>
+  <insert id="create" parameterType="com.zycj.tcc.domain.PrePayCardSection">
+		insert into prepay_card_section
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sectionId != null">
+				section_id,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="cardNo != null">
+				card_no,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sectionId != null">
+				#{sectionId,jdbcType=INTEGER},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.zycj.tcc.domain.PrePayCardSection">
+		update prepay_card_section
+		<set>
+			start_time = #{startTime,jdbcType=TIMESTAMP},
+			end_time = #{endTime,jdbcType=TIMESTAMP},
+			section_id = #{sectionId,jdbcType=INTEGER}
+		</set>
+		where card_no = #{cardNo,jdbcType=VARCHAR}
+	</update>
+</mapper>

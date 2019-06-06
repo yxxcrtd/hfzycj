@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/task 
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+       >
+	<task:annotation-driven/>
+    <context:annotation-config/>
+
+    <!-- 设置属于Spring管理的类 -->
+    <context:component-scan base-package="com.zycj">
+        <!-- 排除com.zycj..*Controller包下的类，由SpringMVC来管理 -->
+        <context:exclude-filter type="regex" expression="com.zycj..*Controller"/>
+    </context:component-scan>
+
+    <!-- 设置项目中可以获取到的properties配置文件 -->
+    <context:property-placeholder location="classpath*:dataSource.properties"/>
+
+    <!-- 设置Druid数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+        <!-- 数据源URL -->
+        <property name="url" value="${url}"/>
+        <!-- 数据库用户名 -->
+        <property name="username" value="${db.username}"/>
+        <!-- 数据库密码 -->
+        <property name="password" value="${db.password}"/>
+        <!-- 数据库驱动 -->
+        <property name="driverClassName" value="${driverClassName}"/>
+
+        <!-- 属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall -->
+        <property name="filters" value="${filters}"/>
+
+        <!-- 最大连接池数量 -->
+        <property name="maxActive" value="${maxActive}"/>
+        <!-- 初始化时建立物理连接的个数 -->
+        <property name="initialSize" value="${initialSize}"/>
+        <!-- 获取连接时最大等待时间，单位毫秒 -->
+        <property name="maxWait" value="${maxWait}"/>
+        <!-- 最小连接池数量 -->
+        <property name="minIdle" value="${minIdle}"/>
+
+        <!-- 有两个含义：
+            1) Destroy线程会检测连接的间隔时间
+            2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}"/>
+
+        <property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}"/>
+
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句,如果validationQuery为null，testOnBorrow、testOnReturn、 testWhileIdle都不会其作用 -->
+        <property name="validationQuery" value="${validationQuery}"/>
+        <!-- 建议配置为true，不影响性能，并且保证安全性。 申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。-->
+        <property name="testWhileIdle" value="${testWhileIdle}"/>
+        <!-- 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。 -->
+        <property name="testOnBorrow" value="${testOnBorrow}"/>
+        <!-- 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能 -->
+        <property name="testOnReturn" value="${testOnReturn}"/>
+        <!-- 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100 -->
+        <!--<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}"/>-->
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="${removeAbandoned}"/>
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}"/>
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="${logAbandoned}"/>
+    </bean>
+
+	<!-- spring上传文件配置，这里申明的id必须为multipartResolver -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="209715200" />
+	</bean> 
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+        <property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <!-- 设置数据库方言 -->
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <!--<prop key="hibernate.current_session_context_class">${hibernate.current_session}</prop>-->
+                <!-- 设置是否在控制台输出sql语句 -->
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <!-- 指定访问特定schema下的表信息
+                <prop key="hibernate.default_schema">${hibernate.default_schema}</prop> -->
+                <!-- 输出格式化的sql语句 -->
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <!-- 设置项目启动时，hibernate检查数据库和实体类是否匹配 -->
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
+        <!-- 扫描受Hibernate管理的实体类所在的包-->
+        <property name="packagesToScan" value="com.zycj"/> 
+    </bean>
+	
+	<bean id="genericDao" class="com.zycj.sdk.base.dao.HibernateGenericDAO"></bean>
+	
+    <!-- 设置spring使用Hibernate的事务处理方式 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+	
+    <!-- 设置事务注解使用spring事务管理的方式 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    
+    <aop:config proxy-target-class="true">
+		<!-- 建议事务不要加在sdk层,加在platform等业务的service层 -->
+		<aop:advisor
+			pointcut="execution(* com.zycj..*ServiceImpl.*(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+	
+	<tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
+	
+	<!-- 当程序的增删改操作不起作用时，检查此处的代码。默认不配置的情况下，read-only为true -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" />
+			<tx:method name="move*" />
+			<tx:method name="batch*" />
+			<tx:method name="remove*" />
+			<tx:method name="delete*" />
+			<tx:method name="add*" />
+			<tx:method name="update*" />
+			<tx:method name="edit*" />
+			<tx:method name="get*" read-only="true" /><!-- 设置为readonly时，不允许进行增删改操作 -->
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="select*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	<bean id="nettyServer" class="com.zycj.server.netty.server.NettyServer" init-method="init" scope="singleton"></bean>
+	<import resource="classpath:quartz.xml"/>
+</beans>

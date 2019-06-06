@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ArrearDao" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.Arrear" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="car_no" property="carNo" jdbcType="VARCHAR" />
+    <result column="car_type" property="carType" jdbcType="INTEGER" />
+    <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+    <result column="space_no" property="spaceNo" jdbcType="VARCHAR" />
+    <result column="in_emp" property="inEmp" jdbcType="VARCHAR" />
+    <result column="in_time" property="inTime" jdbcType="TIMESTAMP" />
+    <result column="out_time" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="arrear_amount" property="arrearAmount" jdbcType="DECIMAL" />
+    <result column="arrear_type" property="arrearType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="charge_emp" property="chargeEmp" jdbcType="VARCHAR" />
+    <result column="pos_no" property="posNo" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="req_serial" property="reqSerial" jdbcType="VARCHAR" />
+    <result column="old_amount" property="oldAmount" jdbcType="DECIMAL" />
+    <result column="modify_remark" property="modifyRemark" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ArrearGroupInfoMap" type="com.zycj.tcc.vo.ArrearGroupInfo">
+	<result column="arrear_type" property="arrearType" jdbcType="INTEGER" />
+	<result column="count" property="count" jdbcType="INTEGER" />
+	<result column="amount" property="amount" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, serial_no, order_id, car_no, car_type, section_no, section_name, space_no, in_emp, 
+    in_time, out_time, arrear_amount, arrear_type, status, charge_emp, pos_no, pay_time, 
+    pay_type, pay_amount, create_time, update_time, req_serial, old_amount, modify_remark
+  </sql>
+  
+  <select id="selectAllArrearAmountByCarNo" resultType="java.math.BigDecimal" parameterType="java.lang.String" >
+    <![CDATA[
+    select sum(arrear_amount) from arrear where car_no=#{carNo} and status=0
+    ]]>
+  </select>
+  <select id="selectArrearGroupByCarNo" resultMap="ArrearGroupInfoMap" parameterType="java.lang.String" >
+    <![CDATA[
+    SELECT 
+    arrear_type arrear_type,
+    COUNT(arrear_type) count,
+    SUM(arrear_amount) amount 
+    FROM arrear 
+    WHERE car_no=#{carNo} 
+    AND STATUS=0 GROUP BY arrear_type
+    ]]>
+  </select>
+  <select id="selectListByCarNo" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	<![CDATA[
+	  	SELECT car_no ,
+		  	in_time ,
+		  	out_time ,
+		  	section_name ,
+		  	arrear_amount ,
+		  	id 
+	  		from arrear 
+	  	WHERE car_no = #{carNo}
+	  	AND car_type = #{carType}
+	  	AND status = 0
+  	]]>
+  </select>
+  
+  <select id="selectIdListByCarNo" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	<![CDATA[
+	  	SELECT 	id 
+	  		from arrear 
+	  	WHERE car_no = #{carNo}
+	  	AND status = 0
+	  	AND create_time <= #{selectTime}
+  	]]>
+  </select>
+  
+  
+  <select id="selectNetPayListByCarNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	<![CDATA[
+	  	SELECT *
+	  		from arrear 
+	  	WHERE car_no = #{carNo}
+	  	AND status = 1
+	  	AND pay_type in (7,8,9,11)
+	  	AND (invoice_times = 0 OR invoice_times IS NULL)
+  	]]>
+  </select>
+  
+  <select id="selectNetPayAmountByCarNo" resultType="java.math.BigDecimal" parameterType="java.lang.String" >
+    <![CDATA[
+    select sum(arrear_amount) from arrear 
+    WHERE car_no=#{carNo} 
+	AND status = 1
+	AND pay_type in (7,8,9,11)
+	AND (invoice_times = 0 OR invoice_times IS NULL)
+    ]]>
+  </select>
+  
+  <update id="updatePrintBatch" parameterType="java.util.Map">  
+        update arrear  set   
+            invoice_times = invoice_times + 1,  
+            invoice_batch = #{invoiceBatch},
+            invoice_no = #{invoiceNo},
+            update_time = now()
+        where 
+        status = 1
+        and (invoice_times = 0 OR invoice_times IS NULL)
+        and id in   
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
+            #{item}  
+        </foreach>  
+  </update>  
+	
+	 <update id="updatePrintAll" parameterType="java.util.Map">  
+       <![CDATA[
+        update arrear  set   
+            invoice_times = invoice_times + 1,  
+            invoice_batch = #{invoiceBatch},
+            invoice_no = #{invoiceNo},
+            update_time = now()
+        where 
+        status = 1
+        and (invoice_times = 0 OR invoice_times IS NULL)
+        and car_no = #{carNo}
+        and pay_time <= #{selectTime}
+		]]>
+	</update>  
+</mapper>

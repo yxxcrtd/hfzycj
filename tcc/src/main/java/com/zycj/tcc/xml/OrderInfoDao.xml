@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="OrderInfoDao" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.OrderInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="serial_no" property="serialNo" jdbcType="VARCHAR" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+    <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+    <result column="space_no" property="spaceNo" jdbcType="VARCHAR" />
+    <result column="car_type" property="carType" jdbcType="INTEGER" />
+    <result column="car_no" property="carNo" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="pay_type" property="payType" jdbcType="INTEGER" />
+    <result column="order_flow" property="orderFlow" jdbcType="INTEGER" />
+    <result column="in_pos" property="inPos" jdbcType="VARCHAR" />
+    <result column="in_emp" property="inEmp" jdbcType="VARCHAR" />
+    <result column="in_time" property="inTime" jdbcType="TIMESTAMP" />
+    <result column="out_pos" property="outPos" jdbcType="VARCHAR" />
+    <result column="out_emp" property="outEmp" jdbcType="VARCHAR" />
+    <result column="out_time" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="is_free" property="isFree" jdbcType="INTEGER" />
+    <result column="charge_emp" property="chargeEmp" jdbcType="VARCHAR" />
+    <result column="charge_time" property="chargeTime" jdbcType="TIMESTAMP" />
+    <result column="charge_pos" property="chargePos" jdbcType="VARCHAR" />
+    <result column="fee_total" property="feeTotal" jdbcType="DECIMAL" />
+    <result column="fee_real" property="feeReal" jdbcType="DECIMAL" />
+    <result column="invoice_batch" property="invoiceBatch" jdbcType="VARCHAR" />
+    <result column="invoice_no" property="invoiceNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="req_serial" property="reqSerial" jdbcType="VARCHAR" />
+    <result column="fee_id" property="feeId" jdbcType="INTEGER" />
+    <result column="arrear_status" property="arrearStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, serial_no, section_name, section_no, space_no, car_type, car_no, order_status, 
+    pay_type, in_pos, in_emp, in_time, out_pos, out_emp, out_time, is_free, charge_emp, 
+    charge_time, charge_pos, fee_total, fee_real, invoice_batch, invoice_no, create_time, 
+    update_time, req_serial, fee_id, arrear_status
+  </sql>
+  <select id="selectParkingOrderByCarNoForToday" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_info
+    where car_no=#{carNo} AND order_status=1
+  </select>
+  <select id="selectParkingOrderByToday" resultMap="BaseResultMap">
+  	SELECT 
+  	<include refid="Base_Column_List" /> 
+  	FROM order_info WHERE order_status=1 AND DATE_FORMAT(in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d')
+  </select>
+  <select id="selectOrderHistoryBySpaceNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT 
+  	<include refid="Base_Column_List" /> 
+  	<![CDATA[
+  	FROM order_info 
+  	WHERE space_no=#{spaceNo} 
+  	AND order_status=1 
+  	AND DATE_FORMAT(in_time,'%Y%m%d') <> DATE_FORMAT(CURDATE(),'%Y%m%d')
+  	]]>
+  </select>
+  <select id="selectRecentlyOrderByCarNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT a.* FROM order_info a WHERE a.car_no=#{carNo} 
+  	AND DATE_FORMAT(a.in_time,'%Y%m%d') = DATE_FORMAT(CURDATE(),'%Y%m%d') 
+  	order by a.in_time desc limit 1
+  </select>
+  <select id="selectRecentlyOrderBySpaceNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT a.* FROM order_info a WHERE a.space_no=#{spaceNo} AND a.create_time > DATE_FORMAT(CURDATE(),'%Y-%m-%d') order by id desc limit 1
+  </select>
+  
+  <select id="selectLastOrderNoInvoiceByCarNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	SELECT *
+	FROM order_info
+	WHERE id = (SELECT
+              MAX(id)
+            FROM order_info i
+            WHERE i.pay_type IN (7,8,9)
+                AND i.order_status = 0
+                AND i.invoice_no IS NULL
+                AND i.car_no = #{carNo} )
+  </select>
+</mapper>

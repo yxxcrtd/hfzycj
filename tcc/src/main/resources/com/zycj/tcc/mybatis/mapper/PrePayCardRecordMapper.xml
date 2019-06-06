@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zycj.tcc.mybatis.mapper.PrePayCardRecordMapper">
+	<resultMap id="BaseResultMap" type="com.zycj.tcc.domain.PrePayCardRecord">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+		<result column="record_type" property="recordType" jdbcType="INTEGER" />
+		<result column="order_id" property="orderId" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="discount" property="discount" jdbcType="DECIMAL" />
+		<result column="creat_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="emp_no" property="empNo" jdbcType="VARCHAR" />
+		<result column="tip" property="tip" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="checkInfo" type="com.zycj.tcc.domain.PrePayCardCheckInfo">
+		<result column="date" property="date" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, card_no, record_type, order_id, amount, creat_time, emp_no, tip
+	</sql>
+	<insert id="insertSelective" parameterType="com.zycj.tcc.domain.PrePayCardRecord">
+		insert into prepay_card_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="cardNo != null">
+				card_no,
+			</if>
+			<if test="recordType != null">
+				record_type,
+			</if>
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="discount != null">
+				discount,
+			</if>
+			<if test="createTime != null">
+				creat_time,
+			</if>
+			<if test="empNo != null">
+				emp_no,
+			</if>
+			<if test="tip != null">
+				tip,
+			</if>
+			<if test="chargeType != null">
+				chongzhi_type,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="cardNo != null">
+				#{cardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="recordType != null">
+				#{recordType,jdbcType=INTEGER},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="discount != null">
+				#{discount,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="empNo != null">
+				#{empNo,jdbcType=VARCHAR},
+			</if>
+			<if test="tip != null">
+				#{tip,jdbcType=VARCHAR},
+			</if>
+			<if test="chargeType != null">
+				#{chargeType,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- huoqu benri xiaofei cishu  -->
+	<select id="countCardDay" resultType="java.lang.Integer" >
+    select count(*) from prepay_card_record 
+    where 
+    card_no = #{0,jdbcType=VARCHAR} 
+    and record_type = 2
+    and creat_time &gt;= #{1,jdbcType=TIMESTAMP} 
+    and creat_time &lt;= #{2,jdbcType=TIMESTAMP}
+  </select>
+  <select id="getPrePayCardRecordByOrderId" resultMap="BaseResultMap"  parameterType="java.lang.String">
+  		select id, card_no, record_type, order_id, amount, creat_time, emp_no, tip from prepay_card_record where order_id = #{orderId}
+  </select>
+  <select id="getNotCheckInfo" resultMap="checkInfo" parameterType="java.lang.String">
+  select sum(amount)/100 amount,DATE_FORMAT(creat_time,"%Y-%m-%d") date from prepay_card_record 
+		where emp_no = #{empNo}
+		and record_type = 1
+		and chongzhi_type = 1
+		and is_checked = 0
+		GROUP BY TO_DAYS(creat_time)
+  </select>
+  <delete id="deleteByOrderId" parameterType="java.lang.String">
+  	delete from prepay_card_record where order_id = #{orderId}
+  </delete>
+  <insert id="saveError" parameterType="com.zycj.tcc.domain.PrePayCardRecord">
+		insert into prepayCardError
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cardNo != null">
+				cardNo,
+			</if>
+			<if test="orderId != null">
+				orderId,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="createTime != null">
+				createTime,
+			</if>
+			<if test="empNo != null">
+				empNo,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cardNo != null">
+				#{cardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				#{orderId,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="empNo != null">
+				#{empNo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="check">
+		update prepay_card_record set is_checked = 1,check_time = now() 
+		where emp_no = #{0} 
+		and record_type = 1
+		and chongzhi_type = 1
+		and is_checked = 0
+		and TO_DAYS(creat_time) = TO_DAYS(#{1})
+	</update>
+	<select id="getEmpChargeAmount" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select sum(amount) amount from prepay_card_record where record_type = 1 and  emp_no = #{empNo} and TO_DAYS(creat_time) = TO_DAYS(now())
+	</select>
+</mapper>

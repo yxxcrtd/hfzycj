@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="EmployeeOnlineDao">
+	<resultMap id="BaseResultMap" type="com.zycj.tcc.domain.EmployeeOnline">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="emp_no" property="empNo" jdbcType="VARCHAR" />
+		<result column="pos_no" property="posNo" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="token" property="token" jdbcType="VARCHAR" />
+		<result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+		<result column="active_time" property="activeTime" jdbcType="TIMESTAMP" />
+		<result column="expired_time" property="expiredTime" jdbcType="TIMESTAMP" />
+		<result column="logout_time" property="logoutTime" jdbcType="TIMESTAMP" />
+		<result column="login_ip" property="loginIp" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, emp_no, pos_no, status, token, login_time, active_time,
+		expired_time,logout_time,login_ip, create_time, update_time
+	</sql>
+	<update id="updateStatusDownByEmpNoOrPosNo" parameterType="java.util.Map">
+		update employee_online set status=0,logout_time=NOW() where status=1 
+		and (emp_no=#{empNo} or pos_no=#{posNo})
+	</update>
+	<update id="updateStatusDownByEmpNo" parameterType="java.lang.String">
+		update employee_online set status=0,logout_time=NOW() where emp_no=#{empNo} and status=1 
+	</update>
+	<update id="updateStatusDownForLogout" parameterType="java.util.Map">
+		update employee_online set status=0,logout_time=NOW() where emp_no=#{empNo} and pos_no=#{posNo} and status=1 
+	</update>
+	<update id="updateStatusDownByAll">
+		update employee_online set status=0,logout_time=NOW() where status=1 
+	</update>
+	<update id="updateStatusDownById" parameterType="java.lang.Integer">
+		update employee_online set status=0,logout_time=NOW() where id=#{id} 
+	</update>
+	<select id="selectEmployeeOnlineByStatus" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from employee_online
+		where status=#{status}
+	</select>
+	<select id="selectEmployeeOnlineByEmpNoAndPosNo" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from employee_online
+		where emp_no=#{empNo} and 
+		pos_no=#{posNo}
+	</select>
+	<select id="selectEmployeeOnlineByTokenAndRelevantNo" resultMap="BaseResultMap" parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from employee_online
+		where emp_no=#{empNo} and 
+		pos_no=#{posNo} and 
+		token=#{token}
+	</select>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcc.park.api.mybatis.PrePayCardMapper" >
+  <resultMap id="BaseResultMap" type="com.tcc.park.api.user.domain.PrePayCard" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="INTEGER" />
+    <result column="creat_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="last_deal_time" property="lastDealTime" jdbcType="TIMESTAMP" />
+    <result column="use_end_time" property="useEndTime" jdbcType="TIMESTAMP" />
+    <result column="card_balance" property="cardBalance" jdbcType="INTEGER" />
+    <result column="card_score" property="cardScore" jdbcType="INTEGER" />
+    <result column="card_free_time" property="cardFreeTime" jdbcType="INTEGER" />
+    <result column="card_status" property="cardStatus" jdbcType="INTEGER" />
+    <result column="card_creat_emp" property="cardCreateEmp" jdbcType="VARCHAR" />
+    <result column="card_phone" property="cardPhone" jdbcType="VARCHAR" />
+    <result column="card_contacts" property="cardContacts" jdbcType="VARCHAR" />
+    <result column="card_car_no" property="cardCarNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, card_no, card_type, creat_time, end_time, last_deal_time, use_end_time, card_balance, card_score, card_free_time,card_status,card_creat_emp,card_phone,card_contacts,card_car_no
+  </sql>
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from prepay_card
+    where card_phone = #{phone,jdbcType=VARCHAR}
+  </select>
+</mapper>

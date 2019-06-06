@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="RoadSpaceDao">
+	<resultMap id="BaseResultMap" type="com.zycj.tcc.domain.RoadSpace">
+	   <id column="id" property="id" jdbcType="INTEGER" />
+	   <result column="section_id" property="sectionId" jdbcType="INTEGER" />
+	   <result column="space_no" property="spaceNo" jdbcType="VARCHAR" />
+	   <result column="space_status" property="spaceStatus" jdbcType="INTEGER" />
+	   <result column="space_type" property="spaceType" jdbcType="INTEGER" />
+	   <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	   <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	   <result column="is_parked" property="isParked" jdbcType="INTEGER" />
+	   <result column="car_no" property="carNo" jdbcType="VARCHAR" />
+	   <result column="park_time" property="parkTime" jdbcType="TIMESTAMP" />
+	   <result column="drive_time" property="driveTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="RoadSpaceVoResultMap" type="com.zycj.tcc.vo.RoadSpaceVo">
+		<result column="space_no" property="a" jdbcType="VARCHAR" />
+		<result column="is_parked" property="b" jdbcType="INTEGER" />
+		<result column="car_no" property="c" jdbcType="VARCHAR" />
+		<result column="orderId" property="d" jdbcType="INTEGER" />
+		<result column="arrear_status" property="e" jdbcType="INTEGER" />
+		<result column="payTime" property="payTime" jdbcType="VARCHAR" />
+		<result column="inTime" property="inTime" jdbcType="VARCHAR" />
+		<result column="sectionName" property="sectionName" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+	</resultMap>
+	<resultMap id="RoadSpaceVoResultMapForDCJ" type="com.zycj.tcc.vo.DcjRoadSpaceVo">
+		<result column="space_no" property="c" jdbcType="VARCHAR" />
+		<result column="is_parked" property="d" jdbcType="INTEGER" />
+		<result column="car_no" property="e" jdbcType="VARCHAR" />
+		<result column="arrear_status" property="f" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="RoadSpaceSectionInfoMap" type="com.zycj.tcc.vo.RoadSpaceSectionInfo">
+		<result column="section_id" property="sectionId" jdbcType="INTEGER" />
+		<result column="space_status" property="spaceStatus" jdbcType="INTEGER" />
+		<result column="is_parked" property="isParked" jdbcType="INTEGER" />
+		<result column="park_time" property="parkTime" jdbcType="TIMESTAMP" />
+		<result column="fee_type" property="feeType" jdbcType="INTEGER" />
+		<result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, section_id, space_no, space_status, space_type, create_time, update_time, is_parked, 
+    	car_no, park_time, drive_time
+	</sql>
+	<select id="selectRoadSpaceByPosNoForHomePageSet" resultType="java.lang.String" parameterType="java.lang.String">
+		select rs.space_no from road_space rs,pos p 
+		where p.pos_no=#{posNo} 
+		AND rs.section_id=p.section_id 
+		AND rs.space_status=1 
+		order by rs.space_no
+	</select>
+	<!--=废弃= 获取pos对应路段的所有车位
+	<select id="selectRoadSpaceByPosNo" resultMap="RoadSpaceVoResultMap" parameterType="java.lang.String">
+		SELECT 
+			rs.space_no space_no,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d')
+			THEN 1 ELSE 0 END) is_parked,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			THEN rs.car_no else NULL end) car_no,
+			oi.id orderId,
+			oi.arrear_status arrear_status
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.space_status=1 
+		LEFT JOIN order_info oi 
+			ON rs.is_parked=1 
+			AND DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no 
+		ORDER BY rs.space_no ASC
+	</select>
+	 -->
+	<!--=废弃= 获取pos对应路段的所有空车位
+	<select id="selectEmptyRoadSpaceByPosNo" resultMap="RoadSpaceVoResultMap" parameterType="java.lang.String">
+		<![CDATA[
+		SELECT 
+			rs.space_no space_no,
+			0 is_parked
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.space_status=1 
+			AND (rs.is_parked=0 or (rs.is_parked=1 and DATE_FORMAT(rs.park_time,'%Y%m%d')<>DATE_FORMAT(CURDATE(),'%Y%m%d') )) 
+		ORDER BY rs.space_no ASC
+		]]>
+	</select>
+	 -->
+	<!--=废弃= 获取pos对应路段的所有已停车车位 
+	<select id="selectParkedRoadSpaceByPosNo" resultMap="RoadSpaceVoResultMap" parameterType="java.lang.String">
+		SELECT 
+			rs.space_no space_no,
+			rs.car_no car_no,
+			rs.is_parked is_parked,
+			oi.id orderId,
+			oi.arrear_status arrear_status
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.is_parked=1 
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND rs.space_status=1 
+		LEFT JOIN order_info oi 
+			ON DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no 
+		ORDER BY rs.space_no ASC
+	</select>
+	-->
+	<!-- 获取总个数-获取pos对应路段的所有车位  过滤映射表 -->
+	<select id="selectRoadSpaceCountByPosNo" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT count(1) count
+		FROM (SELECT DISTINCT
+			rs.space_no space_no,
+			2 is_parked,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			THEN rs.car_no else NULL end) car_no,
+			oi.id orderId,
+			oi.arrear_status arrear_status,
+			DATE_FORMAT(oi.in_time,'%Y-%m-%d %H:%i:%s') inTime,
+			oi.section_name sectionName,
+			(select max(DATE_FORMAT(pr.pay_time,'%Y-%m-%d %H:%i:%s')) from payment_record pr where pr.order_id=oi.id) as payTime,
+			(select SUM(pr.real_pay) from payment_record pr where pr.order_id=oi.id) as amount
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.space_status=1 
+		JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no
+		JOIN order_info oi 
+			ON rs.is_parked=1 
+			AND DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			and order_flow=1
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no) t
+	</select>
+	<!-- 获取pos对应路段的所有车位  过滤映射表-->
+	<select id="selectWaitConfirmRoadSpaces" resultMap="RoadSpaceVoResultMap" parameterType="java.lang.String">
+		SELECT DISTINCT
+			rs.space_no space_no,
+			2 is_parked,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			THEN rs.car_no else NULL end) car_no,
+			oi.id orderId,
+			oi.arrear_status arrear_status,
+			DATE_FORMAT(oi.in_time,'%Y-%m-%d %H:%i:%s') inTime,
+			oi.section_name sectionName,
+			(select max(DATE_FORMAT(pr.pay_time,'%Y-%m-%d %H:%i:%s')) from payment_record pr where pr.order_id=oi.id) as payTime,
+			(select SUM(pr.real_pay) from payment_record pr where pr.order_id=oi.id) as amount
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.space_status=1 
+		JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no
+		JOIN order_info oi 
+			ON rs.is_parked=1 
+			AND DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			and order_flow=1
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no 
+		ORDER BY rs.space_no ASC
+	</select>
+	<!-- 获取pos对应路段的所有车位  过滤映射表-->
+	<select id="selectRoadSpaceByPosNoExtend" resultMap="RoadSpaceVoResultMap" parameterType="java.lang.String">
+		SELECT 
+			rs.space_no space_no,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d')
+			THEN 1 ELSE 0 END) is_parked,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			THEN rs.car_no else NULL end) car_no,
+			oi.id orderId,
+			oi.arrear_status arrear_status
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.space_status=1 
+		INNER JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no 
+		LEFT JOIN order_info oi 
+			ON rs.is_parked=1 
+			AND DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no 
+		ORDER BY rs.space_no ASC
+	</select>
+	<!-- 获取总个数-获取pos对应路段的所有空车位 过滤映射表 -->
+	<select id="selectEmptyRoadSpaceCountByPosNo" resultType="java.lang.Integer" parameterType="java.lang.String">
+		<![CDATA[
+		SELECT 
+			count(*) count
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.space_status=1 
+			AND (rs.is_parked=0 or (rs.is_parked=1 and DATE_FORMAT(rs.park_time,'%Y%m%d')<>DATE_FORMAT(CURDATE(),'%Y%m%d') ))
+		INNER JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no
+		]]>
+	</select>
+	<!-- 获取pos对应路段的所有空车位 过滤映射表-->
+	<select id="selectEmptyRoadSpaceByPosNoExtend" resultMap="RoadSpaceVoResultMap" parameterType="java.lang.String">
+		<![CDATA[
+		SELECT 
+			rs.space_no space_no,
+			0 is_parked
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.space_status=1 
+			AND (rs.is_parked=0 or (rs.is_parked=1 and DATE_FORMAT(rs.park_time,'%Y%m%d')<>DATE_FORMAT(CURDATE(),'%Y%m%d') ))
+		INNER JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no 
+		ORDER BY rs.space_no ASC
+		]]>
+	</select>
+	<!-- 获取总个数-获取pos对应路段的所有已停车车位 过滤映射表 -->
+	<select id="selectParkedRoadSpaceCountByPosNo" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT 
+			count(*) count
+		FROM (SELECT 
+			rs.space_no space_no,
+			rs.car_no car_no,
+			rs.is_parked is_parked,
+			oi.id orderId,
+			oi.arrear_status arrear_status
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.is_parked=1 
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND rs.space_status=1 
+		INNER JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no 
+		INNER JOIN order_info oi 
+			ON DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			AND (oi.order_flow=0 or oi.order_flow=2) 
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no ) t
+	</select>
+	<!-- 获取pos对应路段的所有已停车车位 过滤映射表-->
+	<select id="selectParkedRoadSpaceByPosNoExtend" resultMap="RoadSpaceVoResultMap" parameterType="java.lang.String">
+		SELECT 
+			rs.space_no space_no,
+			rs.car_no car_no,
+			rs.is_parked is_parked,
+			oi.id orderId,
+			oi.arrear_status arrear_status
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.is_parked=1 
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND rs.space_status=1 
+		INNER JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no 
+		JOIN order_info oi 
+			ON DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			AND (oi.order_flow=0 or oi.order_flow=2) 
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no 
+		ORDER BY rs.space_no ASC
+	</select>
+	
+	<update id="updateRoadSpaceBySpaceNoForCarEntry" parameterType="java.util.Map">
+		update road_space set 
+		is_parked=1,
+		car_no=#{carNo},
+		park_time=#{parkTime},
+		drive_time=NULL,
+		update_time=NOW() 
+		where space_no=#{spaceNo}
+	</update>
+	<update id="updateRoadSpaceBySpaceNoForCarExit" parameterType="java.util.Map">
+		update road_space set 
+		is_parked=0,
+		drive_time=#{driveTime},
+		update_time=NOW() 
+		where space_no=#{spaceNo}
+	</update>
+	<update id="updateRoadSpaceNoParkBySpaceNo" parameterType="java.lang.String">
+		update road_space set 
+		is_parked=0,
+		update_time=NOW() 
+		where space_no=#{spaceNo}
+	</update>
+	<update id="updateNoParkByAll">
+		update road_space set 
+		is_parked=0,
+		update_time=NOW() 
+		where is_parked=1
+	</update>
+	<select id="selectFeeRegularIdBySpaceNo" resultType="java.lang.Integer" parameterType="java.lang.String">
+		SELECT b.fee_type FROM road_space a,road_section b WHERE a.space_no=#{spaceNo} AND a.section_id=b.id
+	</select>
+	<select id="selectRoadSpaceBySpaceNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		SELECT 
+		<include refid="Base_Column_List" /> 
+		FROM road_space WHERE space_no=#{spaceNo}
+	</select>
+	<select id="selectRoadSpaceSectionInfoBySpaceNo" resultMap="RoadSpaceSectionInfoMap" parameterType="java.lang.String">
+		SELECT 
+		a.section_id section_id,
+		a.space_status space_status,
+		a.is_parked is_parked,
+		a.park_time park_time,
+		b.fee_type fee_type,
+		b.section_name section_name
+		FROM road_space a,road_section b 
+		WHERE a.space_no=#{spaceNo} 
+		AND a.section_id=b.id
+	</select>
+	<select id="selectRoadSectionIdBySpaceNo" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select section_id from road_space where space_no=#{spaceNo} 
+	</select>
+	<!-- 督查机 根据路段id获取所有-车位-信息  总个数-->
+	<select id="selectRoadSpaceCountByRoadSectionId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select count(*) count from road_space where section_id=#{sectionId}
+	</select>
+	<!-- 督查机 根据路段id获取所有-车位-信息 -->
+	<select id="selectAllRoadSpaceByRoadSectionId" resultMap="RoadSpaceVoResultMapForDCJ" parameterType="java.lang.Integer">
+		SELECT
+			rs.space_no space_no,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+				THEN 1 ELSE 0 END ) is_parked,
+			(CASE WHEN rs.is_parked=1 AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+				THEN rs.car_no else NULL end) car_no,
+			oi.arrear_status arrear_status
+		FROM (select * from road_space where section_id=#{sectionId}) rs LEFT JOIN order_info oi ON rs.is_parked = 1
+		AND DATE_FORMAT(oi.in_time, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+		AND DATE_FORMAT(rs.park_time, '%Y%m%d') = DATE_FORMAT(CURDATE(), '%Y%m%d')
+		AND oi.car_no = rs.car_no
+		AND oi.order_status = 1
+		AND oi.space_no = rs.space_no
+		ORDER BY rs.space_no ASC
+	</select>
+	<!-- 督查机 根据路段id获取所有-空闲-信息  总个数-->
+	<select id="selectEmptyRoadSpaceCountByRoadSectionId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		<![CDATA[
+		SELECT count(*) count FROM road_space rs where rs.section_id=#{sectionId} 
+			AND (rs.is_parked=0 or (rs.is_parked=1 and DATE_FORMAT(rs.park_time,'%Y%m%d')<>DATE_FORMAT(CURDATE(),'%Y%m%d') )) 
+		]]>
+	</select>
+	<!-- 督查机 根据路段id获取所有-空闲-信息 -->
+	<select id="selectEmptyRoadSpaceByRoadSectionId" resultMap="RoadSpaceVoResultMapForDCJ" parameterType="java.lang.Integer">
+		<![CDATA[
+		SELECT 
+			rs.space_no space_no,
+			0 is_parked
+		FROM road_space rs where rs.section_id=#{sectionId} 
+			AND (rs.is_parked=0 or (rs.is_parked=1 and DATE_FORMAT(rs.park_time,'%Y%m%d')<>DATE_FORMAT(CURDATE(),'%Y%m%d') )) 
+		ORDER BY rs.space_no ASC
+		]]>
+	</select>
+	<!-- 督查机 根据路段id获取所有-已停车-信息  总个数-->
+	<select id="selectParkedRoadSpaceCountByRoadSectionId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select count(*) count from road_space where 
+			section_id=#{sectionId} 
+			AND is_parked=1 
+			AND DATE_FORMAT(park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d')
+	</select>
+	<!-- 督查机 根据路段id获取所有-已停车-信息 -->
+	<select id="selectParkedRoadSpaceByRoadSectionId" resultMap="RoadSpaceVoResultMapForDCJ" parameterType="java.lang.Integer">
+		SELECT 
+			rs.space_no space_no,
+			rs.car_no car_no,
+			rs.is_parked is_parked,
+			oi.arrear_status arrear_status
+		FROM (select * from road_space where section_id=#{sectionId} AND is_parked=1 
+			AND DATE_FORMAT(park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d')) rs LEFT JOIN order_info oi 
+			ON DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no 
+		ORDER BY rs.space_no ASC;
+	</select>
+	
+	
+	<!-- 获取pos对应路段已停车辆-->
+	<select id="selectParkedCarByCarNo" resultMap="RoadSpaceVoResultMap" parameterType="java.util.Map">
+		SELECT 
+			rs.car_no car_no,
+			oi.id orderId,
+			oi.arrear_status arrear_status
+		FROM road_space rs INNER JOIN pos p 
+			ON p.pos_no=#{posNo} 
+			AND p.section_id=rs.section_id 
+			AND rs.is_parked=1 
+			AND rs.car_no LIKE CONCAT('%',#{carNo},'%')  
+			AND DATE_FORMAT(rs.park_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND rs.space_status=1 
+		INNER JOIN pos_space ps 
+			on p.pos_no=ps.pos_no 
+			and ps.status=1 
+			and rs.space_no=ps.space_no 
+		LEFT JOIN order_info oi 
+			ON DATE_FORMAT(oi.in_time,'%Y%m%d')=DATE_FORMAT(CURDATE(),'%Y%m%d') 
+			AND oi.car_no=rs.car_no 
+			AND oi.order_status=1 
+			AND oi.space_no=rs.space_no 
+		ORDER BY rs.space_no ASC
+	</select>
+</mapper>

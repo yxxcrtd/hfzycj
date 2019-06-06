@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zycj.tcc.mybatis.mapper.RoadSectionMapper" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.RoadSection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="road_name" property="roadName" jdbcType="VARCHAR" />
+    <result column="road_code" property="roadCode" jdbcType="VARCHAR" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+    <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="used" property="used" jdbcType="INTEGER" />
+    <result column="fee_type" property="feeType" jdbcType="INTEGER" />
+    <result column="fee_start" property="feeStart" jdbcType="TIME" />
+    <result column="fee_end" property="feeEnd" jdbcType="TIME" />
+    <result column="space_start" property="spaceStart" jdbcType="VARCHAR" />
+    <result column="space_end" property="spaceEnd" jdbcType="VARCHAR" />
+    <result column="space_others" property="spaceOthers" jdbcType="VARCHAR" />
+    <result column="start_lo" property="startLo" jdbcType="DECIMAL" />
+    <result column="start_la" property="startLa" jdbcType="DECIMAL" />
+    <result column="end_lo" property="endLo" jdbcType="DECIMAL" />
+    <result column="end_la" property="endLa" jdbcType="DECIMAL" />
+    <result column="point_others" property="pointOthers" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="company_id" property="companyId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, area_code, road_name, road_code, section_name, section_no, total, used, fee_type, 
+    fee_start, fee_end, space_start, space_end, space_others, start_lo, start_la, end_lo, 
+    end_la, point_others, create_time, update_time,company_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zycj.tcc.domain.RoadSectionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from road_section
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from road_section
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from road_section
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zycj.tcc.domain.RoadSectionExample" >
+    delete from road_section
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zycj.tcc.domain.RoadSection" >
+    insert into road_section (id, area_code, road_name, 
+      road_code, section_name, section_no, 
+      total, used, fee_type, 
+      fee_start, fee_end, space_start, 
+      space_end, space_others, start_lo, 
+      start_la, end_lo, end_la, 
+      point_others, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{areaCode,jdbcType=VARCHAR}, #{roadName,jdbcType=VARCHAR}, 
+      #{roadCode,jdbcType=VARCHAR}, #{sectionName,jdbcType=VARCHAR}, #{sectionNo,jdbcType=VARCHAR}, 
+      #{total,jdbcType=INTEGER}, #{used,jdbcType=INTEGER}, #{feeType,jdbcType=INTEGER}, 
+      #{feeStart,jdbcType=TIME}, #{feeEnd,jdbcType=TIME}, #{spaceStart,jdbcType=VARCHAR}, 
+      #{spaceEnd,jdbcType=VARCHAR}, #{spaceOthers,jdbcType=VARCHAR}, #{startLo,jdbcType=DECIMAL}, 
+      #{startLa,jdbcType=DECIMAL}, #{endLo,jdbcType=DECIMAL}, #{endLa,jdbcType=DECIMAL}, 
+      #{pointOthers,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zycj.tcc.domain.RoadSection" >
+    insert into road_section
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="roadName != null" >
+        road_name,
+      </if>
+      <if test="roadCode != null" >
+        road_code,
+      </if>
+      <if test="sectionName != null" >
+        section_name,
+      </if>
+      <if test="sectionNo != null" >
+        section_no,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="used != null" >
+        used,
+      </if>
+      <if test="feeType != null" >
+        fee_type,
+      </if>
+      <if test="feeStart != null" >
+        fee_start,
+      </if>
+      <if test="feeEnd != null" >
+        fee_end,
+      </if>
+      <if test="spaceStart != null" >
+        space_start,
+      </if>
+      <if test="spaceEnd != null" >
+        space_end,
+      </if>
+      <if test="spaceOthers != null" >
+        space_others,
+      </if>
+      <if test="startLo != null" >
+        start_lo,
+      </if>
+      <if test="startLa != null" >
+        start_la,
+      </if>
+      <if test="endLo != null" >
+        end_lo,
+      </if>
+      <if test="endLa != null" >
+        end_la,
+      </if>
+      <if test="pointOthers != null" >
+        point_others,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roadName != null" >
+        #{roadName,jdbcType=VARCHAR},
+      </if>
+      <if test="roadCode != null" >
+        #{roadCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionName != null" >
+        #{sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionNo != null" >
+        #{sectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="used != null" >
+        #{used,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="feeStart != null" >
+        #{feeStart,jdbcType=TIME},
+      </if>
+      <if test="feeEnd != null" >
+        #{feeEnd,jdbcType=TIME},
+      </if>
+      <if test="spaceStart != null" >
+        #{spaceStart,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceEnd != null" >
+        #{spaceEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceOthers != null" >
+        #{spaceOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="startLo != null" >
+        #{startLo,jdbcType=DECIMAL},
+      </if>
+      <if test="startLa != null" >
+        #{startLa,jdbcType=DECIMAL},
+      </if>
+      <if test="endLo != null" >
+        #{endLo,jdbcType=DECIMAL},
+      </if>
+      <if test="endLa != null" >
+        #{endLa,jdbcType=DECIMAL},
+      </if>
+      <if test="pointOthers != null" >
+        #{pointOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zycj.tcc.domain.RoadSectionExample" resultType="java.lang.Integer" >
+    select count(*) from road_section
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update road_section
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaCode != null" >
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roadName != null" >
+        road_name = #{record.roadName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roadCode != null" >
+        road_code = #{record.roadCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sectionName != null" >
+        section_name = #{record.sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sectionNo != null" >
+        section_no = #{record.sectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=INTEGER},
+      </if>
+      <if test="record.used != null" >
+        used = #{record.used,jdbcType=INTEGER},
+      </if>
+      <if test="record.feeType != null" >
+        fee_type = #{record.feeType,jdbcType=INTEGER},
+      </if>
+      <if test="record.feeStart != null" >
+        fee_start = #{record.feeStart,jdbcType=TIME},
+      </if>
+      <if test="record.feeEnd != null" >
+        fee_end = #{record.feeEnd,jdbcType=TIME},
+      </if>
+      <if test="record.spaceStart != null" >
+        space_start = #{record.spaceStart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spaceEnd != null" >
+        space_end = #{record.spaceEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.spaceOthers != null" >
+        space_others = #{record.spaceOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startLo != null" >
+        start_lo = #{record.startLo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.startLa != null" >
+        start_la = #{record.startLa,jdbcType=DECIMAL},
+      </if>
+      <if test="record.endLo != null" >
+        end_lo = #{record.endLo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.endLa != null" >
+        end_la = #{record.endLa,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pointOthers != null" >
+        point_others = #{record.pointOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update road_section
+    set id = #{record.id,jdbcType=INTEGER},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      road_name = #{record.roadName,jdbcType=VARCHAR},
+      road_code = #{record.roadCode,jdbcType=VARCHAR},
+      section_name = #{record.sectionName,jdbcType=VARCHAR},
+      section_no = #{record.sectionNo,jdbcType=VARCHAR},
+      total = #{record.total,jdbcType=INTEGER},
+      used = #{record.used,jdbcType=INTEGER},
+      fee_type = #{record.feeType,jdbcType=INTEGER},
+      fee_start = #{record.feeStart,jdbcType=TIME},
+      fee_end = #{record.feeEnd,jdbcType=TIME},
+      space_start = #{record.spaceStart,jdbcType=VARCHAR},
+      space_end = #{record.spaceEnd,jdbcType=VARCHAR},
+      space_others = #{record.spaceOthers,jdbcType=VARCHAR},
+      start_lo = #{record.startLo,jdbcType=DECIMAL},
+      start_la = #{record.startLa,jdbcType=DECIMAL},
+      end_lo = #{record.endLo,jdbcType=DECIMAL},
+      end_la = #{record.endLa,jdbcType=DECIMAL},
+      point_others = #{record.pointOthers,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zycj.tcc.domain.RoadSection" >
+    update road_section
+    <set >
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="roadName != null" >
+        road_name = #{roadName,jdbcType=VARCHAR},
+      </if>
+      <if test="roadCode != null" >
+        road_code = #{roadCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionName != null" >
+        section_name = #{sectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="sectionNo != null" >
+        section_no = #{sectionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=INTEGER},
+      </if>
+      <if test="used != null" >
+        used = #{used,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null" >
+        fee_type = #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="feeStart != null" >
+        fee_start = #{feeStart,jdbcType=TIME},
+      </if>
+      <if test="feeEnd != null" >
+        fee_end = #{feeEnd,jdbcType=TIME},
+      </if>
+      <if test="spaceStart != null" >
+        space_start = #{spaceStart,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceEnd != null" >
+        space_end = #{spaceEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="spaceOthers != null" >
+        space_others = #{spaceOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="startLo != null" >
+        start_lo = #{startLo,jdbcType=DECIMAL},
+      </if>
+      <if test="startLa != null" >
+        start_la = #{startLa,jdbcType=DECIMAL},
+      </if>
+      <if test="endLo != null" >
+        end_lo = #{endLo,jdbcType=DECIMAL},
+      </if>
+      <if test="endLa != null" >
+        end_la = #{endLa,jdbcType=DECIMAL},
+      </if>
+      <if test="pointOthers != null" >
+        point_others = #{pointOthers,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zycj.tcc.domain.RoadSection" >
+    update road_section
+    set area_code = #{areaCode,jdbcType=VARCHAR},
+      road_name = #{roadName,jdbcType=VARCHAR},
+      road_code = #{roadCode,jdbcType=VARCHAR},
+      section_name = #{sectionName,jdbcType=VARCHAR},
+      section_no = #{sectionNo,jdbcType=VARCHAR},
+      total = #{total,jdbcType=INTEGER},
+      used = #{used,jdbcType=INTEGER},
+      fee_type = #{feeType,jdbcType=INTEGER},
+      fee_start = #{feeStart,jdbcType=TIME},
+      fee_end = #{feeEnd,jdbcType=TIME},
+      space_start = #{spaceStart,jdbcType=VARCHAR},
+      space_end = #{spaceEnd,jdbcType=VARCHAR},
+      space_others = #{spaceOthers,jdbcType=VARCHAR},
+      start_lo = #{startLo,jdbcType=DECIMAL},
+      start_la = #{startLa,jdbcType=DECIMAL},
+      end_lo = #{endLo,jdbcType=DECIMAL},
+      end_la = #{endLa,jdbcType=DECIMAL},
+      point_others = #{pointOthers,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

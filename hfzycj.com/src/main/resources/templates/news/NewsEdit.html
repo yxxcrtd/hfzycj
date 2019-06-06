@@ -1,0 +1,41 @@
+<#include "MainTop.html" />
+    <form action="${request.contextPath}/manage/news/save" method="post" enctype="multipart/form-data">
+
+        <div class="label">显示时间：<span class="star">*</span></div>
+        <div>
+            <@s.formInput "news.date" "class='input135'" /><@s.showErrors classOrStyle="red" />
+        </div>
+
+        <div class="label">分类：</div>
+        <div>
+            <@s.formRadioButtons "news.type" newsTypeMap />
+        </div>
+
+        <div class="label">标题：<span class="star">*</span></div>
+        <div>
+            <@s.formInput "news.title" "class='input872'" /><@s.showErrors classOrStyle="red" />
+        </div>
+
+        <div class="label">内容：<span class="star">*</span></div>
+        <div>
+            <@s.formTextarea "news.content" "class='input' style='width: 1000px; height: 600px;'" /><@s.showErrors classOrStyle="red" />
+        </div>
+
+        <div id="operation">
+            <input type="submit" value="<#if (0 == news.id)>保 存<#else>修 改</#if>" class="button icon_save" />&nbsp;&nbsp;
+            <input type="button" value="返 回" class="button icon_return" onClick="javascript:history.back();" />
+        </div>
+
+        <@s.formHiddenInput "news.id" />
+        <@s.formHiddenInput "news.hit" />
+    </form>
+
+    <script language="javascript" src="${request.contextPath}/js/kindeditor.js"></script>
+    <script>
+    <!--
+        KindEditor.ready(function(K) {
+            var editor = K.create("#content", { newlineTag : "br", pasteType : 1 });
+        });
+    //-->
+    </script>
+<#include "MainBottom.html" />

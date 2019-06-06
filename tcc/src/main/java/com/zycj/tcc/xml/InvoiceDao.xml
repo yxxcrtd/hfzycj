@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="InvoiceDao" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.Invoice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="invoice_name" property="invoiceName" jdbcType="VARCHAR" />
+    <result column="invoice_roll" property="invoiceRoll" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="invoice_batch" property="invoiceBatch" jdbcType="VARCHAR" />
+    <result column="invoice_start" property="invoiceStart" jdbcType="VARCHAR" />
+    <result column="invoice_end" property="invoiceEnd" jdbcType="VARCHAR" />
+    <result column="get_time" property="getTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="giver" property="giver" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, invoice_name, invoice_roll, number, invoice_batch, invoice_start, invoice_end, 
+    get_time, type, status, create_time, update_time, receiver, giver
+  </sql>
+  <select id="selectCountByInvoiceRelevantNum" resultType="java.lang.Integer" parameterType="java.util.Map">
+    <![CDATA[
+    select count(*) from invoice i where i.invoice_batch=#{invoiceId} 
+		and #{invoiceStart}>=cast(i.invoice_start as signed)
+		and #{invoiceEnd}<=cast(i.invoice_end as signed)
+	]]>
+  </select>
+  
+  <select id="selectCountByInvoiceId" resultType="java.lang.Integer" parameterType="java.util.Map">
+    <![CDATA[
+    select count(*) from invoice i where i.invoice_batch=#{invoiceId}
+	]]>
+  </select>
+  
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="RoadSectionDao" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.RoadSection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="road_name" property="roadName" jdbcType="VARCHAR" />
+    <result column="road_code" property="roadCode" jdbcType="VARCHAR" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+    <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="used" property="used" jdbcType="INTEGER" />
+    <result column="fee_type" property="feeType" jdbcType="INTEGER" />
+    <result column="fee_start" property="feeStart" jdbcType="TIME" />
+    <result column="fee_end" property="feeEnd" jdbcType="TIME" />
+    <result column="space_start" property="spaceStart" jdbcType="VARCHAR" />
+    <result column="space_end" property="spaceEnd" jdbcType="VARCHAR" />
+    <result column="space_others" property="spaceOthers" jdbcType="VARCHAR" />
+    <result column="start_lo" property="startLo" jdbcType="DECIMAL" />
+    <result column="start_la" property="startLa" jdbcType="DECIMAL" />
+    <result column="end_lo" property="endLo" jdbcType="DECIMAL" />
+    <result column="end_la" property="endLa" jdbcType="DECIMAL" />
+    <result column="point_others" property="pointOthers" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, area_code, road_name, road_code, section_name, section_no, total, used, fee_type, 
+    fee_start, fee_end, space_start, space_end, space_others, start_lo, start_la, end_lo, 
+    end_la, point_others, create_time, update_time
+  </sql>
+  <select id="selectSectionNameByPrimaryKey" resultType="java.lang.String" parameterType="java.lang.Integer" >
+    select section_name from road_section 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectFeeTypeByPosNo" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    SELECT rs.fee_type FROM road_section rs,pos p WHERE p.pos_no=#{posNo} AND p.section_id=rs.id;
+  </select>
+  <update id="addSpace" parameterType="java.lang.String">
+  	<![CDATA[
+  	UPDATE road_section a 
+  	SET a.used=a.used+1 
+  	WHERE a.used < a.total
+  	AND a.id=(SELECT b.section_id FROM road_space b WHERE b.space_no=#{spaceNo})
+  	]]>
+  </update>
+  <update id="subtractSpace" parameterType="java.lang.String">
+  	<![CDATA[
+  	UPDATE road_section a 
+  	SET a.used=a.used-1 
+  	WHERE a.used > 0 
+  	AND a.id=(SELECT b.section_id FROM road_space b WHERE b.space_no=#{spaceNo})
+  	]]>
+  </update>
+  <update id="clearRoadSectionUsed">
+  	UPDATE road_section SET used=0
+  </update>
+</mapper>

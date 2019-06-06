@@ -1,0 +1,486 @@
+@CHARSET "UTF-8";
+
+/*！ 全局设置 */
+/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font: normal 16px/1.618 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC', Sathu, 'EucrosiaUPC', sans-serif;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+/*！ 本站个性化设置 */
+
+/* 所有居中 */
+div#header, div#choose_us_title, div#choose_us_content, div#choose_us_picture,
+    div#success1, div#success2, div#news, div#partner_title, div#partner, div#footer,
+    div#news_dynamic, div#news_list, div#about_us, div#job, div.contact, div#honor
+{
+
+    width: 1200px;
+    margin: 0 auto;
+}
+
+div#content {
+    width: 100%;
+    float: left;
+    background-color: #FFFFFF;
+    position: relative;
+}
+
+div#header {
+    height: 140px;
+    padding: 45px 0 32px 0;
+}
+div#header_left {
+    float: left;
+    height: 63px;
+    width: 341px;
+    background: url("../images/logo.png");
+}
+
+div#header_right {
+    float: right;
+    max-width: 859px;
+    height: 63px;
+}
+
+div#header_right a {
+    float: left;
+    width: 150px;
+    height: 63px;
+    line-height: 400%;
+    text-align: center;
+    color: #5CACBA;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+div#header_right a#current, div#header_right a:hover {
+    color: #F3B76D;
+    border-bottom: 4px solid #5FA6B8;
+    padding-bottom: 91px;
+}
+
+div#banner {
+    height: 500px;
+    background: url("../images/banner.png") no-repeat center;
+}
+
+div#choose_us_title {
+    color: #3F5263;
+    font-size: 55px;
+    text-align: center;
+    margin: 100px auto 20px;
+}
+div#choose_us_content {
+    text-align: center;
+    color: #5CACBA;
+    font-size: 31px;
+}
+div#choose_us_picture {
+    height: 600px;
+    padding: 100px 0 100px;
+}
+div#choose_us_picture a {
+    color: #5cacba;
+}
+div#choose_us_picture1, div#choose_us_picture2, div#choose_us_picture3, div#choose_us_picture4 {
+    float: left;
+    width: 300px;
+    height: 500px;
+    text-align: center;
+}
+div#choose_us_picture1_pic, div#choose_us_picture2_pic, div#choose_us_picture3_pic, div#choose_us_picture4_pic {
+    width: 300px;
+    height: 320px;
+}
+div#choose_us_picture1_pic {
+    background: url("../images/choose_us_1.png") no-repeat center;
+}
+div#choose_us_picture2_pic {
+    background: url("../images/choose_us_2.png") no-repeat center;
+}
+div#choose_us_picture3_pic {
+    background: url("../images/choose_us_3.png") no-repeat center;
+}
+div#choose_us_picture4_pic {
+    background: url("../images/choose_us_4.png") no-repeat center;
+}
+div#choose_us_picture1_title, div#choose_us_picture2_title, div#choose_us_picture3_title, div#choose_us_picture4_title {
+    font-size: 30px;
+}
+
+div#success {
+    margin: 0 auto;
+    height: 250px;
+    background: url("../images/bg_index_success.png") no-repeat center;
+}
+div#success1 {
+    height: 880px;
+    background: url("../images/bg_index_success1.png") no-repeat center;
+    padding: 100px 0;
+}
+div#success2 {
+    height: 1063px;
+    background: url("../images/bg_index_success2.png") no-repeat center;
+    padding-bottom: 100px;
+}
+
+/*! 新闻背景 */
+div#news_extend {
+    margin: 0 auto;
+    background: url("../images/bg_index_news.png") no-repeat center;
+}
+div#news_title {
+    width: 1010px;
+    height: 150px;
+    color: #415363;
+    padding: 80px 0 0 50px;
+}
+div#news_title1 {
+    float: left;
+    font-size: 50px;
+    width: 700px;
+}
+div#news_more {
+    float: right;
+    font-size: 24px;
+    color: #819DBA;
+    width: 140px;
+    margin-top: 40px;
+}
+div#news_content {
+    width: 80%;
+    font-size: 24px;
+    padding-bottom: 30px;
+}
+div#news_content li {
+    line-height: 50px;
+}
+div#news_content a, div#news_more a {
+    color: #819DBA;
+}
+
+span.news_content_time {
+    float: right;
+}
+
+
+div#partner_title {
+    color: #3F5263;
+    text-align: center;
+    font-size: 36px;
+    padding: 100px 0 50px;
+}
+div#partner {
+    height: 150px;
+    margin-bottom: 100px;
+    position: relative;
+    overflow: hidden;
+}
+div#partner1 a {
+    margin-right: 10px;
+}
+
+
+div#footer {
+    color: #425162;
+    font-size: 24px;
+    padding: 30px 0 20px 120px;
+}
+div.extend {
+    background: #BAE9EF none repeat scroll 0 0;
+}
+
+/*! 二级页面 - 招聘 */
+div#job {
+    font-size: 24px;
+}
+div#job div.job {
+    margin: 20px 0;
+}
+div#job div.job_title {
+    background: #eaf6ff;
+    height: 80px;
+    line-height: 80px;
+    border: 1px solid #eee;
+    padding-left: 30px;
+}
+div#job div.job_content {
+    height: 80px;
+    line-height: 80px;
+}
+div#job div.job_content, div#job div.job_content1 {
+    background: #f6fbff;
+    border: 1px solid #eee;
+    padding-left: 30px;
+}
+div#job span.job_role {
+    color: #ffa270;
+    font-size: 30px;
+}
+
+/*! 二级页面 - 关于我们 */
+div#about_us p, div#job p {
+    text-indent: 30px;
+}
+
+/*! 二级页面 - 联系我们 */
+div.contact {
+    color: #3f5263;
+    font-size: 22px;
+    line-height: 60px;
+    background: #FFF;
+    overflow: hidden;
+}
+div.contact .contact_left {
+    float: left;
+    width: 130px;
+    overflow: hidden;
+}
+div.contact .contact_right {
+    float: left;
+    width: 1049px;
+    overflow: hidden;
+}
+
+/*! 二级页面 */
+div#news_dynamic {
+    height: 80px;
+    line-height: 80px;
+    font-size: 40px;
+    color: #3F5263;
+}
+
+div#news_list {
+    padding: 10px 0 50px;
+    overflow: hidden;
+}
+div#news_list_left {
+    float: left;
+    width: 240px;
+}
+div.news_list_left_title {
+    font-size: 26px;
+    color: #3F5263;
+    height: 80px;
+    line-height: 80px;
+    padding-left: 10px;
+    border-bottom: 2px solid #BAE9EF;
+}
+div#news_list_right {
+    float: right;
+    width: 960px;
+    padding: 20px 20px;
+}
+div#news_list_right li {
+    list-style: none;
+    line-height: 50px;
+}
+div#news_list_right a {
+    color: #3F5263;
+    font-size: 24px;
+}
+div#news_list_right a:hover {
+    color: #A5D9E0;
+}
+div#news_list_right_title {
+    text-align: center;
+    font-size: 36px;
+    color: #405362;
+}
+div#news_list_right_time {
+    text-align: center;
+    color: #91989E;
+    font-size: 20px;
+}
+div#news_list_right_content {
+    padding-top: 10px;
+    color: #405362;
+}
+div#news_list_right_content p {
+    text-indent: 30px;
+}
+
+/*! 登录样式 */
+div#loginContainer {
+    background: rgba(0, 0, 0, 0) linear-gradient(to right bottom, #50a3a2 0%, #d6dae6 100%) repeat scroll 0 0;
+    height: 400px;
+    left: 0;
+    margin-top: -230px;
+    opacity: 0.8;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+
+div#loginSubContainer {
+    height: 400px;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 30px 0 80px;
+    text-align: center;
+}
+
+div#loginSubContainer h1 {
+    color: #FFFFFF;
+    font-size: 40px;
+    font-weight: 200;
+    transition-duration: 1s;
+}
+
+#loginForm {
+    padding: 30px 0 50px;
+    position: relative;
+    z-index: 2;
+}
+
+#loginForm input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 285px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin: 0 auto 10px auto;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 300;
+}
+
+#loginForm input:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#loginForm input:focus {
+    background-color: white;
+    width: 300px;
+    color: #53e3a6;
+}
+
+#loginForm button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background-color: white;
+    border: 0;
+    padding: 10px 15px;
+    color: #53e3a6;
+    border-radius: 3px;
+    width: 285px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+#loginForm button:hover {
+    background-color: #f5f7f9;
+}
+
+.bg-bubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#loginTips {
+    color: #FF0000;
+    padding: 0 0 10px;
+}
+
+
+
+/* jQuery 分页插件 */
+.holder {
+    text-align: center;
+    height: 32px;
+    padding: 50px 0;
+}
+
+/* 分页的超连接 */
+.holder a {
+    cursor: pointer;
+    margin: 5px 10px;
+    padding: 5px 15px;
+    border: 1px solid #BAE9EF;
+    height: 32px;
+    width: 80px;
+    border-radius: 4px;
+    color: #3f5363;
+}
+
+/* 分页的鼠标移上时的样式 */
+.holder a:hover {
+    color: #209CF3;
+    text-decoration: none;
+}
+
+/* 上一页与前面数字的距离 */
+.holder a.jp-previous {
+    margin-right: 15px;
+}
+
+/* 下一页与前面数字的距离 */
+.holder a.jp-next {
+    margin-left: 15px;
+}
+
+/* 鼠标移到 下一页 上的样式 */
+.holder a.jp-next:hover {
+    color: #209CF3;
+    background-color: #FFFFFF;
+    text-decoration: none;
+}
+
+/* 当前激活的 */
+.holder a.jp-current {
+    color: #209CF3;
+    border: none;
+}
+
+/* 连接不可点的颜色 */
+.holder a.jp-disabled {
+    color: #BBBBBB;
+}
+
+/* 连接不可点 */
+.holder a.jp-current, a.jp-current:hover, .holder a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}

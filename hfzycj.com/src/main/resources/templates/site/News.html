@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="keywords" content="停车、诱导、诱导系统" />
+        <meta name="description" content="停车、诱导、诱导系统" />
+        <meta name="robots" content="all" />
+        <title>合肥掌韵车聚信息科技有限公司</title>
+        <link rel="stylesheet" type="text/css" href="../css/style.css" />
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico" />
+    </head>
+
+    <body>
+        <div id="content">
+            <div id="header">
+                <a href="/"><div id="header_left"></div></a>
+                <div id="header_right">
+                    <a href="/">首页</a>
+                    <a href="/upload/news0.html" id="current">新闻动态</a>
+                    <a href="/CGAL.html">成功案例</a>
+                    <a href="/RCZP.html">荣誉资质</a>
+                    <a href="/GYWM.html">关于我们</a>
+                </div>
+            </div>
+            <div class="extend">
+                <div id="news_dynamic">新闻动态</div>
+            </div>
+            <div id="news_list">
+                <div id="news_list_left">
+                    <a href="news0.html">
+                        <div class="news_list_left_title" <#if (0 == news.type)>style="color: #A5D9E0;"</#if>>公司新闻</div>
+                    </a>
+                    <a href="news1.html">
+                        <div class="news_list_left_title" <#if (1 == news.type)>style="color: #A5D9E0;"</#if>>行业资讯</div>
+                    </a>
+                </div>
+                <div id="news_list_right">
+                    <ul class="itemContainer">
+                        <#if (allTypeNewsList?? && 0 < allTypeNewsList?size)>
+                            <#list allTypeNewsList as l>
+                                <a href="/upload/news_${l.id}.html" title="${l.title!}">
+                                    <li>
+                                        <div>
+                                            <span class="news_content_title"><#if (28 < l.title?length)>${l.title[0..27]}...<#else>${l.title}</#if></span>
+                                            <span class="news_content_time">${l.date?string('yyyy-MM-dd')}</span>
+                                        </div>
+                                    </li>
+                                </a>
+                            </#list>
+                        </#if>
+                    </ul>
+                    <div class="holder"></div>
+                </div>
+            </div>
+            <div class="extend">
+                <div id="footer"></div>
+            </div>
+        </div>
+        <script language="javaScript" src="/webjars/jquery/3.2.0/jquery.min.js"></script>
+        <script language="javaScript" src="../js/jquery.jPages.js"></script>
+        <script language="javaScript" src="../js/public.js"></script>
+        <script type="text/javascript">$(function() { $("div.holder").jPages({ }); });</script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?626997225a0dea496dd2932efc938872";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?cc333e78ac25e7ade66f6eb100a08fed";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AppUpdateDao" >
+  <resultMap id="BaseResultMap" type="com.tcc.park.api.domain.AppUpdate" >
+    <id column="app_update_id" property="appUpdateId" jdbcType="INTEGER" />
+    <result column="version_code_min" property="versionCodeMin" jdbcType="INTEGER" />
+    <result column="version_code_max" property="versionCodeMax" jdbcType="INTEGER" />
+    <result column="version_name" property="versionName" jdbcType="VARCHAR" />
+    <result column="update_description" property="updateDescription" jdbcType="VARCHAR" />
+    <result column="apk_url" property="apkUrl" jdbcType="VARCHAR" />
+    <result column="apk_size" property="apkSize" jdbcType="VARCHAR" />
+    <result column="client_type" property="clientType" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    app_update_id, version_code_min, version_code_max, version_name, update_description, 
+    apk_url, apk_size, client_type
+  </sql>
+  <select id="selectByCodeType" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_update
+    where client_type = #{clientType}
+    and version_code_min &lt;= #{versionCode}
+    and version_code_max >= #{versionCode}
+    order by app_update_id desc 
+    limit 1
+  </select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PosDao">
+	<resultMap id="BaseResultMap" type="com.zycj.tcc.domain.Pos" >
+	   <id column="id" property="id" jdbcType="INTEGER" />
+	   <result column="section_id" property="sectionId" jdbcType="INTEGER" />
+	   <result column="pos_no" property="posNo" jdbcType="VARCHAR" />
+	   <result column="pos_model" property="posModel" jdbcType="VARCHAR" />
+	   <result column="pos_status" property="posStatus" jdbcType="INTEGER" />
+	   <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	   <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	   <result column="online_status" property="onlineStatus" jdbcType="INTEGER" />
+	   <result column="emp_no" property="empNo" jdbcType="VARCHAR" />
+	   <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+	   <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+	   <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+	    id, section_id, pos_no, pos_model, pos_status, create_time, update_time, online_status, 
+    	emp_no, emp_name, section_no, section_name
+	</sql>
+	<select id="selectPosByPosNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from pos 
+		where pos_no=#{posNo}
+	</select>
+	<select id="findPos" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select 
+		<include refid="Base_Column_List" /> 
+		from pos 
+		where section_id=#{sectionId}
+	</select>
+	<update id="updateSectionNameById" parameterType="java.util.Map">
+		update pos set section_name = #{sectionName} where id = #{id}
+	</update>
+	<update id="updateEmpOnlineStatusDown" parameterType="java.util.Map">
+		<![CDATA[
+		update pos set online_status =0,update_time=NOW() where emp_no = #{empNo} and pos_no <> #{posNo}
+		]]>
+	</update>
+	<update id="updateEmpOnlineStatusDownByPosNo" parameterType="java.lang.String">
+		update pos set online_status =0,update_time=NOW() where pos_no = #{posNo}
+	</update>
+	<update id="clearPosEmpStatus">
+		<![CDATA[
+		update pos set online_status =0,update_time=NOW() where online_status<>0 or online_status is null
+		]]>
+	</update>
+	
+</mapper>

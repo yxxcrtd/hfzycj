@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zycj.tcc.mybatis.mapper.InvoiceMapper" >
+  <resultMap id="BaseResultMap" type="com.zycj.tcc.domain.Invoice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="invoice_name" property="invoiceName" jdbcType="VARCHAR" />
+    <result column="invoice_roll" property="invoiceRoll" jdbcType="INTEGER" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="invoice_batch" property="invoiceBatch" jdbcType="VARCHAR" />
+    <result column="invoice_start" property="invoiceStart" jdbcType="VARCHAR" />
+    <result column="invoice_end" property="invoiceEnd" jdbcType="VARCHAR" />
+    <result column="get_time" property="getTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="giver" property="giver" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, invoice_name, invoice_roll, number, invoice_batch, invoice_start, invoice_end, 
+    get_time, type, status, create_time, update_time, receiver, giver
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zycj.tcc.domain.InvoiceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from invoice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from invoice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from invoice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zycj.tcc.domain.InvoiceExample" >
+    delete from invoice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zycj.tcc.domain.Invoice" >
+    insert into invoice (id, invoice_name, invoice_roll, 
+      number, invoice_batch, invoice_start, 
+      invoice_end, get_time, type, 
+      status, create_time, update_time, 
+      receiver, giver)
+    values (#{id,jdbcType=INTEGER}, #{invoiceName,jdbcType=VARCHAR}, #{invoiceRoll,jdbcType=INTEGER}, 
+      #{number,jdbcType=INTEGER}, #{invoiceBatch,jdbcType=VARCHAR}, #{invoiceStart,jdbcType=VARCHAR}, 
+      #{invoiceEnd,jdbcType=VARCHAR}, #{getTime,jdbcType=TIMESTAMP}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{receiver,jdbcType=VARCHAR}, #{giver,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zycj.tcc.domain.Invoice" >
+    insert into invoice
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="invoiceName != null" >
+        invoice_name,
+      </if>
+      <if test="invoiceRoll != null" >
+        invoice_roll,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="invoiceBatch != null" >
+        invoice_batch,
+      </if>
+      <if test="invoiceStart != null" >
+        invoice_start,
+      </if>
+      <if test="invoiceEnd != null" >
+        invoice_end,
+      </if>
+      <if test="getTime != null" >
+        get_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="giver != null" >
+        giver,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceName != null" >
+        #{invoiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceRoll != null" >
+        #{invoiceRoll,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceBatch != null" >
+        #{invoiceBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceStart != null" >
+        #{invoiceStart,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceEnd != null" >
+        #{invoiceEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="getTime != null" >
+        #{getTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="giver != null" >
+        #{giver,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zycj.tcc.domain.InvoiceExample" resultType="java.lang.Integer" >
+    select count(*) from invoice
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update invoice
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceName != null" >
+        invoice_name = #{record.invoiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceRoll != null" >
+        invoice_roll = #{record.invoiceRoll,jdbcType=INTEGER},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.invoiceBatch != null" >
+        invoice_batch = #{record.invoiceBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceStart != null" >
+        invoice_start = #{record.invoiceStart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invoiceEnd != null" >
+        invoice_end = #{record.invoiceEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getTime != null" >
+        get_time = #{record.getTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.receiver != null" >
+        receiver = #{record.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giver != null" >
+        giver = #{record.giver,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update invoice
+    set id = #{record.id,jdbcType=INTEGER},
+      invoice_name = #{record.invoiceName,jdbcType=VARCHAR},
+      invoice_roll = #{record.invoiceRoll,jdbcType=INTEGER},
+      number = #{record.number,jdbcType=INTEGER},
+      invoice_batch = #{record.invoiceBatch,jdbcType=VARCHAR},
+      invoice_start = #{record.invoiceStart,jdbcType=VARCHAR},
+      invoice_end = #{record.invoiceEnd,jdbcType=VARCHAR},
+      get_time = #{record.getTime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      receiver = #{record.receiver,jdbcType=VARCHAR},
+      giver = #{record.giver,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zycj.tcc.domain.Invoice" >
+    update invoice
+    <set >
+      <if test="invoiceName != null" >
+        invoice_name = #{invoiceName,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceRoll != null" >
+        invoice_roll = #{invoiceRoll,jdbcType=INTEGER},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceBatch != null" >
+        invoice_batch = #{invoiceBatch,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceStart != null" >
+        invoice_start = #{invoiceStart,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceEnd != null" >
+        invoice_end = #{invoiceEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="getTime != null" >
+        get_time = #{getTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="giver != null" >
+        giver = #{giver,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zycj.tcc.domain.Invoice" >
+    update invoice
+    set invoice_name = #{invoiceName,jdbcType=VARCHAR},
+      invoice_roll = #{invoiceRoll,jdbcType=INTEGER},
+      number = #{number,jdbcType=INTEGER},
+      invoice_batch = #{invoiceBatch,jdbcType=VARCHAR},
+      invoice_start = #{invoiceStart,jdbcType=VARCHAR},
+      invoice_end = #{invoiceEnd,jdbcType=VARCHAR},
+      get_time = #{getTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      giver = #{giver,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

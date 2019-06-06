@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wl.weixin">
+ <!-- 新增车辆信息 -->
+ <insert id="addCar" parameterType="com.wl.ko.home.model.UserWeiXin">
+ 	insert into  user_weixin(open_id,car_no) values(
+ 		#{open_id,jdbcType=VARCHAR},
+ 		#{car_no,jdbcType=VARCHAR}
+ 	)
+ </insert>
+ 
+ <!-- 通过openid来查询出对应的车辆信息 -->
+ <select id="getAllCarNoThroughtOpenId" parameterType="map"	resultType="com.wl.ko.home.model.UserWeiXin">
+	select id,car_no,open_id
+	from user_weixin
+	where open_id=#{open_id,jdbcType=VARCHAR}
+  </select> 
+  
+  
+  <!-- 根据车牌，以及对应的编号来删除相应的信息 -->
+  <delete id="delUserWeiXin" parameterType="map">
+  	delete  from user_weixin where  open_id=#{open_id,jdbcType=VARCHAR} and  car_no=#{car_no,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 查詢出其對應的對象是否存在 -->
+  <select id="getUserWeiXin" parameterType="com.wl.ko.home.model.UserWeiXin" resultType="Integer">
+  	select count(1) from user_weixin 
+    where open_id=#{open_id,jdbcType=VARCHAR} and  car_no=#{car_no,jdbcType=VARCHAR}
+  </select>
+  
+    	  
+  <update id="updateUserInfo" parameterType="com.wl.ko.home.model.WeiXinUserInfo" >
+  	update user_weixin
+    <set >
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headImage != null" >
+        head_image = #{headImage,jdbcType=VARCHAR},
+      </if>
+      <if test="carNo != null" >
+        car_no = #{carNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where open_id = #{openId,jdbcType=INTEGER}
+  </update>
+</mapper>

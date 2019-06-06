@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ParkLotDao" >
+  <resultMap id="BaseResultMap" type="com.tcc.park.api.domain.RoadSection" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="road_name" property="roadName" jdbcType="VARCHAR" />
+    <result column="road_code" property="roadCode" jdbcType="VARCHAR" />
+    <result column="section_name" property="sectionName" jdbcType="VARCHAR" />
+    <result column="section_no" property="sectionNo" jdbcType="VARCHAR" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="used" property="used" jdbcType="INTEGER" />
+    <result column="fee_type" property="feeType" jdbcType="INTEGER" />
+    <result column="fee_start" property="feeStart" jdbcType="TIME" />
+    <result column="fee_end" property="feeEnd" jdbcType="TIME" />
+    <result column="space_start" property="spaceStart" jdbcType="VARCHAR" />
+    <result column="space_end" property="spaceEnd" jdbcType="VARCHAR" />
+    <result column="space_others" property="spaceOthers" jdbcType="VARCHAR" />
+    <result column="start_lo" property="startLo" jdbcType="DECIMAL" />
+    <result column="start_la" property="startLa" jdbcType="DECIMAL" />
+    <result column="end_lo" property="endLo" jdbcType="DECIMAL" />
+    <result column="end_la" property="endLa" jdbcType="DECIMAL" />
+    <result column="point_others" property="pointOthers" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, area_code, road_name, road_code, section_name, section_no, total, used, fee_type, 
+    fee_start, fee_end, space_start, space_end, space_others, start_lo, start_la, end_lo, 
+    end_la, point_others, create_time, update_time
+  </sql>
+  <select id="selectByPointFee" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    FROM road_section r
+	WHERE r.start_la >= #{sLa}
+	AND r.disabled = 0
+    AND r.start_la &lt;= #{lLa}
+    AND r.start_lo >= #{sLo}
+    AND r.start_lo &lt;= #{lLo}
+    <if test="feeType == 2" >
+    	AND r.fee_type = 0
+    </if>
+    <if test="feeType == 1" >
+    	AND r.fee_type != 0
+    </if>
+    <if test="pageStart != null">
+    	LIMIT ${pageStart}, ${pageEnd}
+    </if>
+  </select>
+  
+  <select id="selectByPointFeeCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    SELECT 
+    COUNT(1)
+    FROM road_section r
+	WHERE r.start_la >= #{sLa}
+    AND r.start_la &lt;= #{lLa}
+    AND r.start_lo >= #{sLo}
+    AND r.start_lo &lt;= #{lLo}
+    <if test="feeType == 2" >
+    	AND r.fee_type = 0
+    </if>
+    <if test="feeType == 1" >
+    	AND r.fee_type != 0
+    </if>
+  </select>
+</mapper>

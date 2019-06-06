@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 以下配置要按顺序配置 -->
+	<!--  configuration -->
+	<!--   properties -->
+	<!--   settings -->
+	<!--   typeAliases -->
+	<!--   typeHandlers -->
+	<!--   objectFactory -->
+	<!--   plugins -->
+	<!--   environments -->
+	<!--    environment -->
+	<!--  transactionManager -->
+	<!--  dataSource -->
+	<!--  mappers -->
+	
+	<!-- mybatis全局配置 -->
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="defaultStatementTimeout" value="25000" />
+	</settings>
+	
+	<!-- 别名 map对Map -->
+	<typeAliases>  
+		<typeAlias alias="baseBean" type="com.wl.base.model.BaseBean" />
+	</typeAliases>
+	
+	<!-- 分页插件 -->
+	<plugins>
+		<plugin interceptor="com.wl.base.interceptor.PageInterceptor">
+		<!-- 数据库方言oracle -->
+<!-- 			<property name="dialect" value="oracle" /> -->
+			<property name="dialect" value="mysql" />
+		</plugin>
+	</plugins>
+	
+</configuration>

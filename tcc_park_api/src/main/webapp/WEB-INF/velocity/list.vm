@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="${rc.contextPath}/css/list.css" rel="stylesheet" type="text/css"/>
+<title>咨询信息</title>
+</head>
+
+<body>
+	
+	#foreach( $elem in $allElems)
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		    	<ul><a href="${elem.detailUrl}">
+		        	<li><h1> ${elem.title}</h1></li>
+		            <li class="zx_kznr_rq">${elem.newsFrom}</li>
+					#if(${elem.imgUrl})
+						<li class="zx_kznr_img"><img src="${elem.imgUrl}" class="Scale"  /></li>
+					#end
+		            <li class="zx_kznr_wz"> ${elem.brief}</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	#end
+	<!--
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150205_1.html">
+		        	<li><h1> 人代会关注停车管理 路侧停车或将立法</h1></li>
+		            <li  class="zx_kznr_rq">2015年02月02日</li>
+					<li class="zx_kznr_img"><img src="${rc.contextPath}/img/img_0205.jpg" class="Scale"  /></li>
+		            <li class="zx_kznr_wz"> 北京市第十四届人代表会三次会议昨日闭幕，据市人大议案审查委员会介绍，今年共收到191件代表议案，集中关注停车管理和缓解拥堵等4方面的问题。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150201_1.html">
+		        	<li><h1> 合肥首个智能停车系统诞生 各类信息尽在“掌”控中</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月25日</li>
+		            <li class="zx_kznr_wz"> 在城市里驾车出行，让很多车主头疼的是，停车经常一“位”难求。不过，这一难题将能得到缓解。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150201_2.html">
+		        	<li><h1> 拿着手机找车位 市内停车不再难</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月24日</li>
+		            <li class="zx_kznr_wz"> 在合肥市的中心城区，停车位“一位难求”令众多车主头疼不已。以往，都是要靠碰运气才能找到车位，今后，找车位就可以不用再盲目兜圈，哪里有空位，手机上点一点就一目了然。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150201_3.html">
+		        	<li><h1> 全市万余停车位尽在“掌”握</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月24日</li>
+		            <li class="zx_kznr_wz"> 周末想去省立医院看病，又担心庐江路上没地儿停车，出门前透过手机APP就能查询到路边停车位的实时信息。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150201_4.html">
+		        	<li><h1> 合肥城市智慧停车系统发布</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月24日</li>
+		            <li class="zx_kznr_wz"> 昨日，市场星报记者从合肥城市智慧停车系统上线发布会上了解到，作为全国首个成熟的停车智能系统，合肥城市智慧停车系统正式上线</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150201_5.html">
+		        	<li><h1> “合肥城泊”APP上线 找车位“神器”可查2万多停车位</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月24日</li>
+		            <li class="zx_kznr_wz"> 核心提示： “合肥城市智慧停车系统”已经上线，市民可通过手机APP查询到市区近3000个临时停车位的实时信息，以及20000多个停车位的分布情况。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150201_6.html">
+		        	<li><h1> “合肥城泊”App上线 打开手机找停车位</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月24日</li>
+		            <li class="zx_kznr_wz"> 昨日，合肥市城市泊车管理有限公司召开改制后的首个新闻发布会，“合肥城市智慧停车系统”正式上线。开发者称，这将是全国...</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150126.html">
+		        	<li><h1> 合肥市区至少有4个“黑停车场” 哪些地方可临时停车？</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月26日</li>
+					<li class="zx_kznr_img"><img src="${rc.contextPath}/img/p_20150126.jpg" class="Scale"  /></li>
+		            <li class="zx_kznr_wz"> 1月23日，“合肥城市智慧停车系统”正式上线，以后去老城区之前，只要打开手机搜一搜，就能知道哪里可以停车。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150126_1.html">
+		        	<li><h1> 智慧城市：“合肥城泊”APP上线 停车不再碰运气</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月26日</li>
+		            <li class="zx_kznr_wz"> 市民们平日里出门办事，最担心的可能就是要“抢车位”。如今，合肥的智慧城市建设给大家吃了一颗定心丸</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/20150124.html">
+		        	<li><h1> 停车神器智能APP“合肥城泊”亮相合肥</h1></li>
+		            <li  class="zx_kznr_rq">2015年01月24日</li>
+		            <li class="zx_kznr_wz"> 你出行还在盲目地找空车位吗？你还在为找不到空车位而头疼吗？那么福利来了</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	
+	
+ <div class="bolck10"></div>
+<div class="zx_rnr">
+       
+		<div class="zx_kznr">
+		<ul><a href="${rc.contextPath}/html/p2.html">
+		        	<li><h1> 合肥将建成全国首个“城市智慧停车系统”</h1></li>
+		            <li  class="zx_kznr_rq">2014年12月29日</li>
+		            <li class="zx_kznr_img"><img src="${rc.contextPath}/img/t2.jpg"  class="Scale" /></li>
+		           
+		            <li class="zx_kznr_wz"> 合肥城市泊车管理有限公司为缓解城市“停车难”，正加速上线“城市智慧停车系统”。即日起，市民可通过手机APP...</li>
+		            <li  class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></li>
+		            </a>
+		        </ul>
+		    	
+		</div>
+		<div class="bolck5"></div>
+</div>
+		<div class="bolck10"></div>
+<div class="zx_rnr">
+		<div class="zx_kznr">
+			<ul><a href="${rc.contextPath}/html/p3.html">
+		        	<li><h1> 停车不再难：我市路边临时停车位可用手机查询！</h1></li>
+		            <li  class="zx_kznr_rq">2014年12月28日</li>
+		           <li class="zx_kznr_img"><img src="${rc.contextPath}/img/t3.jpg"  class="Scale" /></li>
+		            <li class="zx_kznr_wz"> 由合肥城市泊车管理有限公司（以下简称“合肥城泊公司”）组织研发的城市路边停车位查询手机APP“合肥城泊”今日正式上线... </li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		            </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+</div>
+		<div class="bolck10"></div>
+<div class="zx_rnr">
+		<div class="zx_kznr">
+				<ul><a href="${rc.contextPath}/html/p1.html">
+		        	<li><h1> “城市停车诱导系统”: 路边停车新指引 帮您迅速找车位</h1></li>
+		            <li  class="zx_kznr_rq">2014年12月25日</li>
+		            <li class="zx_kznr_img"><img src="${rc.contextPath}/img/t1.jpg"   class="Scale"/></li>  
+		            <li class="zx_kznr_wz"> 当小汽车保有量越来越多时，停车难问题随之而来，在车位难求的老城区尤显突出。哪里还有泊位可以停车？ </li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></li>
+		            </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+</div>
+		<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/p4.html">
+		        	<li><h1> 在合肥，未来理想中的路边停车是什么样的？</h1></li>
+		            <li  class="zx_kznr_rq">2014年12月23日</li>
+		            <li class="zx_kznr_img"><img src="${rc.contextPath}/img/t4.jpg" class="Scale"  /></li>
+		           
+		            <li class="zx_kznr_wz"> 未来，合肥市民是这样实现路边临时停车的：出行前，市民能够从手机APP、城市停车诱导屏和网络上获得目的地附近停车...</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/p6.html">
+		        	<li><h1> 北上广津停车费问题再追踪：至少有千个黑停车场</h1></li>
+		            <li  class="zx_kznr_rq">2014年12月21日</li>
+					<li class="zx_kznr_img"><img src="${rc.contextPath}/img/t6.jpg" class="Scale"  /></li>
+		            <li class="zx_kznr_wz"> 新华社“新华视点”栏目日前播发两篇报道，曝光国内大城市停车费至少一半没进政府口袋，多地相关部门管理混乱。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	<div class="bolck10"></div>
+	<div class="zx_rnr">
+		<div class="zx_kznr">
+		
+		    	<ul><a href="${rc.contextPath}/html/p5.html">
+		        	<li><h1> 合肥市机动车停车场管理办法</h1></li>
+		            <li  class="zx_kznr_rq">2009年12月3日</li>
+		            <li class="zx_kznr_wz"> 《合肥市机动车停车场管理办法》已经2009年12月3日市人民政府第48次常务会议审议通过，现予公布，自2010年2月1日起施行。</li>
+		            <li class="zx_kznr_wzzy"><p class="zx_kznr_left">查看更多</p><p class="zx_kznr_right">></p></a></li>
+		           </a>
+		        </ul>
+		</div>
+		<div class="bolck5"></div>
+	</div>
+	
+	-->
+	
+</body>
+</html>

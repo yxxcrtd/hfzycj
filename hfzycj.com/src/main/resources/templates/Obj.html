@@ -1,0 +1,9 @@
+<#macro getNameByObj obj>
+	<#if obj??>
+		<#if ("manage" == obj)>后台
+		<#elseif ("news" == obj)>新闻资讯
+		<#elseif ("changePassword" == obj)>修改密码
+		<#else>Oops！
+		</#if>
+	</#if>
+</#macro>

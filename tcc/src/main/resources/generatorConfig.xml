@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <classPathEntry location="D:\maven\repository\mysql\mysql-connector-java\5.1.25\mysql-connector-java-5.1.25.jar" />
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+  	<commentGenerator>  
+		<property name="suppressAllComments" value="true" />  
+   	</commentGenerator>
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/tcc" userId="root" password="#ATH123#" />
+    <javaTypeResolver >
+      	<property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    <javaModelGenerator targetPackage="com.zycj.tcc.domain" targetProject="batcc\src\main\java" >
+    	<property name="enableSubPackages" value="true" />	    
+      	<property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    <sqlMapGenerator targetPackage="com.zycj.tcc.mybatis.mapper" targetProject="batcc\src\main\java" >
+    	<property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.zycj.tcc.mybatis.mapper" targetProject="batcc\src\main\java" />
+    <!--
+    ok<table schema="hjn" tableName="log_interface" domainObjectName="LogInterface" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="employee" domainObjectName="Employee" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="log_emp_login" domainObjectName="LogEmpLogin" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="employee_online" domainObjectName="EmployeeOnline" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+  	ok<table schema="hjn" tableName="road_space" domainObjectName="RoadSpace" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="pos" domainObjectName="Pos" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="road_section" domainObjectName="RoadSection" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="fee_regular" domainObjectName="FeeRegular" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="payment_record" domainObjectName="PaymentRecord" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="order_info" domainObjectName="OrderInfo" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="check_record" domainObjectName="CheckRecord" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    ok<table schema="hjn" tableName="check_info" domainObjectName="CheckInfo" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    <table schema="hjn" tableName="app_error" domainObjectName="AppError" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    <table schema="hjn" tableName="log_app_install" domainObjectName="LogAppInstall" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    <table schema="hjn" tableName="invoice_print" domainObjectName="InvoicePrint" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    <table schema="hjn" tableName="arrear" domainObjectName="Arrear" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    <table schema="hjn" tableName="pos_space" domainObjectName="PosSpace" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    <table schema="hjn" tableName="app_update" domainObjectName="AppUpdate" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    <table schema="hjn" tableName="ticket_info" domainObjectName="TicketInfo" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+    -->
+    <table schema="hjn" tableName="invoice" domainObjectName="Invoice" enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" ></table>
+  </context>
+</generatorConfiguration>

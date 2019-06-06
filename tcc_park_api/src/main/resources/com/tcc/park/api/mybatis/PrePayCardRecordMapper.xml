@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tcc.park.api.mybatis.PrePayCardRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.tcc.park.api.user.domain.PrePayCardRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+    <result column="record_type" property="recordType" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="creat_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="emp_no" property="empNo" jdbcType="VARCHAR" />
+    <result column="tip" property="tip" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, card_no, record_type, order_id, amount, creat_time, emp_no, tip
+  </sql>
+  <select id="selectByCard" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from prepay_card_record
+    where card_no = #{card,jdbcType=VARCHAR}
+    order by creat_time desc limit 50
+  </select>
+</mapper>

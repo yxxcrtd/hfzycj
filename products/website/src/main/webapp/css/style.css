@@ -1,0 +1,913 @@
+@CHARSET "UTF-8";
+
+/*！ 全局设置 */
+/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font: normal 16px/1.618 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei UI', 'Microsoft YaHei', 'Noto Sans CJK SC', Sathu, 'EucrosiaUPC', sans-serif;
+    margin: 0;
+}
+
+a {
+    color: #666666;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover, a:visited {
+    text-decoration: none;
+}
+
+
+/*！ 本站个性化设置 */
+div#content {
+    width: 100%;
+    float: left;
+    background-color: #FFFFFF;
+    position: relative;
+}
+
+div#header {
+    height: 104px; /*! 32 + 44 + 28 */
+    padding: 32px 0 28px;
+}
+
+div#logo {
+    float: left;
+}
+
+div#search {
+    width: 624px;
+    float: right;
+}
+
+div#search input {
+    height: 44px;
+    width: 518px;
+    font-size: 16px;
+    color: #BBBBBB;
+    padding: 13px 0 13px 14px;
+    border: 2px solid #3F99F3;
+}
+
+div#search a {
+    float: right;
+    font-size: 18px;
+    width: 106px;
+    height: 44px;
+    line-height: 44px;
+    color: #FFFFFF;
+    background: #3F99F3;
+    text-align: center;
+}
+
+div#nav {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    height: 50px;
+}
+
+div#nav a {
+    float: left;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+#current, div#menu a:hover {
+    color: #2057f3;
+    background: #FFB140;
+}
+
+#last {
+    width: 500px !important;
+    text-align: right !important;
+}
+
+div#mapd {
+    width: 1200px;
+    height: 600px;
+    margin: 0 auto;
+    border: 1px solid #3F99F3;
+}
+
+div#map {
+    height: 580px;
+    width: 100%;
+    margin: auto;
+}
+
+div#information .title, div#park_feedback_vote .title {
+    font-size: 18px;
+    background: url("../images/tittle.png") no-repeat;
+    font-weight: bold;
+    color: #424242;
+    padding-left: 36px;
+    height: 20px;
+    line-height: 20px;
+}
+
+div#information ul, div#park ul, div#vote ul {
+    margin: 0;
+    padding: 0;
+    height: 20px;
+    line-height: 20px;
+}
+
+div#information li, div#park li, div#vote li, div#feedback_detail_left li {
+    font-size: 14px;
+    color: #666666;
+    list-style: none;
+}
+
+div#information li .span_rule {
+    color: #FFB140;
+}
+
+div#information .point, div#information .point1, div#park .point, div#vote .point {
+    float: left;
+    font-size: 34px;
+    color: #666666;
+}
+
+div#information .point, div#park .point, div#vote .point {
+    color: #666666;
+}
+
+div#information .point1 {
+    color: #FFB140;
+}
+
+div#information li, div#information .point, div#information .point1, div#vote li, div#vote .point {
+    padding: 16px 0 14px;
+}
+
+div#information #news_first {
+    height: 139px;
+}
+
+div#information #news_first #news_img {
+    float: left;
+}
+
+div#information #news_first #news_first_right {
+    float: left;
+    width: 201px; /* 404 - 203*/
+    padding-left: 16px;
+    color: #666666;
+    line-height: 26px;
+}
+
+div#information #news_first #news_first_right #news_first_right_top {
+    font-weight: bold;
+}
+
+div#information #news_first #news_first_right #news_first_right_bottom {
+    padding-top: 14px;
+}
+
+div#index_information_left {
+    float: left;
+    width: 404px;
+}
+
+div#index_information_right {
+    float: right;
+    width: 736px;
+}
+
+div#index_information_right_top {
+    height: 235px;
+}
+
+div#index_information_right_top_left {
+    float: left;
+    width: 338px; /* (736 - 60) / 2 */
+    height: 235px;
+}
+
+div#index_information_right_top_right {
+    float: right;
+    width: 338px; /* (736 - 60) / 2 */
+    height: 235px;
+}
+
+div#index_information_right_bottom {
+    height: 100%;
+}
+
+div#park_feedback_vote {
+}
+
+div#park {
+    float: left;
+    width: 406px;
+
+    overflow: hidden;
+}
+
+div#park_right {
+    width: 736px;
+    float: right;
+}
+
+div#feedback {
+}
+
+div#feedback div#feedback_textarea {
+    padding-top: 16px;
+}
+
+div#feedback textarea {
+    resize: none;
+    width: 718px;
+    height: 220px;
+    border: 1px solid #A2A2A2;
+    padding: 20px;
+    font-size: 14px;
+    color: #A2A2A2;
+}
+
+span#feedback_phone {
+    font-size: 20px;
+    font-weight: bold;
+    height: 18px;
+    line-height: 18px;
+}
+
+span#feedback_phone img {
+    height: 19px;
+    line-height: 19px;
+    padding: 0 8px 0 34px;
+}
+
+div#feedback_submit {
+    padding-top: 30px;
+}
+
+div#feedback_submit input[type=text] {
+    padding: 16px 0 16px 20px;
+    border: 1px solid #A2A2A2;
+    margin-right: 44px;
+    font-size: 14px;
+    color: #A2A2A2;
+    width: 227px;
+}
+
+div#feedback_submit span#feedback_submit_a {
+    height: 44px;
+    width: 128px;
+    padding: 13px 61px;
+    color: #FFFFFF;
+    border-radius: 8px;
+    font-size: 20px;
+    background-color: #209CF3;
+    cursor: pointer;
+}
+
+div#park li {
+    padding: 16px 0 102px;
+}
+
+div#park .point {
+    padding: 16px 0 82px;
+}
+
+div#park_li_left {
+    float: left;
+    width: 329px; /* 406 - 17 - 60 */
+}
+
+div#park_li_right {
+    float: right;
+    margin: 21px 0; /* (102 - 60) / 2 */
+}
+
+div#park_li_right_number {
+    width: 60px;
+    height: 60px;
+    line-height: 45px;
+    border-radius: 30px;
+    text-align: center;
+    background: #ffb140 center center;
+    color: #FFFFFF;
+    font-size: 18px;
+}
+
+div#park_li_right_name {
+    margin-top: -28px;
+    font-size: 14px;
+}
+
+div#park_title {
+    color: #666666;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+div#park_title {
+    padding-bottom: 14px;
+}
+
+div#park_address, div#park_type {
+    color: #666666;
+    padding: 0 0 14px 0;
+}
+
+div#footer {
+    width: 100%;
+    height: 100px;
+    background: #3F99F3;
+}
+
+/*！本站公共部分 */
+div.extend {
+    background: #209CF3;
+}
+
+div#extend_app {
+    background: #43B3FF;
+}
+
+/*所有居中，白色背景*/
+div#header, div#app, div#information, div#park_feedback_vote, div#link, div#information_detail, div#feedback_detail {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+div.gap_row_16 {
+    height: 16px;
+}
+
+div.gap_row_20 {
+    height: 20px;
+}
+
+div.gap_row_30 {
+    height: 30px;
+}
+
+div.gap_row_40, div.gap_row_40_gray {
+    height: 40px;
+}
+
+div.gap_row_50 {
+    height: 50px;
+}
+
+div.gap_row_40_gray {
+    background-color: #f1f1f1;
+}
+
+div.gap_row_20, div.gap_row_16, div.gap_row_30, div.gap_row_40, div.gap_row_50 {
+    background-color: #FFFFFF;
+    overflow: hidden;
+    clear: both;
+}
+
+div#app {
+    height: 616px;
+    text-align: center;
+}
+
+div#link_title {
+    text-align: center;
+    padding: 60px 0 30px;
+    font-size: 20px;
+    color: #424242;
+    font-weight: bold;
+}
+
+div#link a {
+    color: #666666;
+    padding-right: 70px;
+}
+
+div#link_content {
+    padding-bottom: 54px;
+}
+
+div#footer {
+    font-size: 14px;
+    line-height: 27px;
+    padding: 10px 0;
+    color: #FFFFFF;
+}
+
+/*! 登录样式 */
+div#loginContainer {
+    background: rgba(0, 0, 0, 0) linear-gradient(to right bottom, #50a3a2 0%, #d6dae6 100%) repeat scroll 0 0;
+    height: 400px;
+    left: 0;
+    margin-top: -230px;
+    opacity: 0.8;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+
+div#loginSubContainer {
+    height: 400px;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 30px 0 80px;
+    text-align: center;
+}
+
+div#loginSubContainer h1 {
+    color: #FFFFFF;
+    font-size: 40px;
+    font-weight: 200;
+    transition-duration: 1s;
+}
+
+#loginForm {
+    padding: 30px 0 50px;
+    position: relative;
+    z-index: 2;
+}
+
+#loginForm input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 285px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin: 0 auto 10px auto;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 300;
+}
+
+#loginForm input:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#loginForm input:focus {
+    background-color: white;
+    width: 300px;
+    color: #53e3a6;
+}
+
+#loginForm button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+    background-color: white;
+    border: 0;
+    padding: 10px 15px;
+    color: #53e3a6;
+    border-radius: 3px;
+    width: 285px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+#loginForm button:hover {
+    background-color: #f5f7f9;
+}
+
+.bg-bubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#loginTips {
+    color: #FF0000;
+    padding: 0 0 10px;
+}
+
+/*图片的样式*/
+.amap-marker {
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    color: #e90000;
+    background: url(../images/position.png) no-repeat;
+    cursor: pointer;
+}
+
+/*数字的样式*/
+.marker-route {
+    color: #ffffff;
+    margin-top: 2px;
+    margin-left: 1px;
+    font-size: 10px;
+}
+
+.amap-marker .marker-marker-bus-from {
+    background-position: -95px -100px;
+}
+
+/*首页滚动图的样式*/
+#index_information_right_bottom a.prev, #index_information_right_bottom a.next {
+    float: left;
+}
+
+#index_information_right_bottom a.prev {
+    margin: 70px 10px 0 0;
+}
+
+#index_information_right_bottom a.next {
+    margin: 70px 0 0 1px;
+}
+
+#index_information_right_bottom .carousel {
+    float: left;
+    padding-left: 10px;
+    position: relative;
+    visibility: hidden;
+    left: -5000px;
+}
+
+#index_information_right_bottom .carousel > ul > li > img {
+    width: 196px;
+    height: 136px;
+    vertical-align: middle;
+    margin: 0 32px 10px 0;
+}
+
+/* 二级资讯、二级公众监督 */
+div#information_detail, div#feedback_detail {
+    overflow: hidden;
+}
+
+div#information_detail_left, div#feedback_detail_left {
+    float: left;
+    width: 696px; /* 1200 - 184 -320 */
+}
+
+div#information_detail_left li, div#feedback_detail_left li {
+    padding-bottom: 18px;
+}
+
+div.feedback_list_top, div.feedback_list_reply_title {
+    overflow: hidden;
+    padding-bottom: 16px;
+}
+
+div.feedback_list_top_left {
+    float: left;
+    color: #209CF3;
+    font-size: 14px;
+}
+
+div.feedback_list_top_right {
+    float: right;
+}
+
+div.feedback_list_content, div.feedback_list_reply_content {
+    padding-bottom: 18px;
+}
+
+pre {
+    margin: 0;
+    word-wrap: break-word;
+    word-break: normal;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+div.feedback_list_reply_title {
+    font-size: 14px;
+    color: #ffb140;
+}
+
+div.feedback_list_reply_title, div.feedback_list_reply_content {
+    padding-left: 20px;
+}
+
+div#feedback_detail_left hr {
+    margin: 0;
+    height: 1px;
+    border: 0;
+    border-bottom: 0.1px solid #A2A2A2;
+    overflow: hidden;
+}
+
+div#page_right {
+    float: right;
+    width: 320px;
+}
+
+div#information_detail_left ul {
+    padding: 0;
+    margin: 0;
+}
+
+div#information_detail_left li {
+    list-style: none;
+    margin-bottom: 48px;
+    overflow: hidden;
+}
+
+div#information_detail_left .title, #information_detail_left #detail_title {
+    font-weight: bold;
+    font-size: 22px;
+    color: #424242;
+    height: 38px;
+    line-height: 38px;
+    margin-bottom: 16px;
+}
+
+div#information_detail_left .detail_img {
+    float: left;
+    width: 192px;
+    height: 120px;
+    margin-right: 20px;
+}
+
+div#information_detail_left .detail_content {
+    width: 484px; /* 696 - 20 - 192 */
+}
+
+div#information_detail_left .detail_content1 {
+    width: 696px; /* 没有图片 */
+}
+
+div#information_detail_left .detail_content, div#information_detail_left .detail_content1 {
+    font-size: 12px;
+    color: #A2A2A2;
+    height: 120px; /* 与图片高度一致 */
+    overflow: hidden;
+}
+
+div#information_detail_left .detail_content .time, div#information_detail_left .detail_content1 .time {
+    height: 24px;
+    line-height: 24px;
+}
+
+div#information_detail_left .summary {
+    height: 82px; /* 120 - 24 * 2 */
+    font-size: 14px;
+    color: #424242;
+    overflow: hidden;
+}
+
+div#information_detail_left .detail_content img, div#information_detail_left .detail_content1 img, #information_detail_left .hit_time img {
+    padding-right: 8px;
+}
+
+#information_detail_left .hit_time span {
+    padding-left: 26px;
+}
+
+#information_detail_left #hit {
+    padding: 0;
+}
+
+div#information_detail_left .hit_time {
+    font-size: 12px;
+    color: #A2A2A2;
+    overflow: hidden;
+}
+
+div#information_detail_left hr {
+    margin: 0 0 34px;
+    height: 18px;
+    border: 0;
+    border-bottom: 0.1px solid #A2A2A2;
+}
+
+div#information_detail_left #img {
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+div#information_detail_left #summary {
+    padding-bottom: 30px;
+}
+
+div#information_detail_left #content {
+    padding-bottom: 78px;
+}
+
+div#information_detail_left #summary, div#information_detail_left #content {
+    font-size: 14px;
+    color: #424242;
+}
+.red {
+    color: #FF0000;
+}
+
+/* 每个详情页右边的样式 */
+div#page_right #real_time, div#page_right #right_notice, div#page_right #right_rule {
+    width: 320px;
+    margin-bottom: 50px;
+}
+div#page_right .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #424242;
+    padding-left: 1px;
+    height: 20px;
+    line-height: 20px;
+}
+div#page_right ul {
+    margin: 16px 0;
+    padding: 0;
+    line-height: 30px;
+}
+
+div#page_right li {
+    list-style: none;
+}
+div#page_right span {
+    color: #A5A5A5;
+}
+div#right_notice .point, div#right_rule .point1 {
+    float: left;
+    font-size: 34px;
+    color: #A5A5A5;
+}
+
+/* jQuery 分页插件 */
+.holder {
+    text-align: center;
+    height: 32px;
+    padding: 5px 0 52px 0;
+}
+
+/* 分页的超连接 */
+.holder a {
+    cursor: pointer;
+    margin: 5px 10px;
+    padding: 5px 15px;
+    border: 1px solid #DEDEDE;
+    height: 32px;
+    width: 80px;
+    border-radius: 4px;
+    font-weight: bold;
+    color: #209CF3;
+}
+
+/* 分页的鼠标移上时的样式 */
+.holder a:hover {
+    color: #209CF3;
+    text-decoration: none;
+}
+
+/* 上一页与前面数字的距离 */
+.holder a.jp-previous {
+    margin-right: 15px;
+}
+
+/* 下一页与前面数字的距离 */
+.holder a.jp-next {
+    margin-left: 15px;
+}
+
+/* 鼠标移到 下一页 上的样式 */
+.holder a.jp-next:hover {
+    color: #209CF3;
+    background-color: #FFFFFF;
+    text-decoration: none;
+}
+
+/* 当前激活的 */
+.holder a.jp-current {
+    color: #209CF3;
+    border: none;
+}
+
+/* 连接不可点的颜色 */
+.holder a.jp-disabled {
+    color: #BBBBBB;
+}
+
+/* 连接不可点 */
+.holder a.jp-current, a.jp-current:hover, .holder a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.h5_news {
+    margin: 20px;
+    padding: 10px 20px;
+    border: 1px solid #BBBBBB;
+    border-radius: 7px;
+}
+.h5_news img {
+    width: 100%;
+}
+
+.h5_title {
+    font-size: 22px;
+    font-weight: bold;
+}
+.h5_time {
+    color: #BBBBBB;
+}
+.h5_summary {
+    font-size: 18px;
+    padding: 10px 0;
+}
+.h5_detail {
+    font-size: 14px;
+    text-align: right;
+    color: #0000FF;
+}
+
+#fixedLayer {
+    position: absolute;
+    left: 130px;
+    top: 174px;
+    z-index: 100;
+    width: 223px;
+    max-height: 580px;
+    line-height: 30px;
+    background: #ffffff;
+    -moz-border-bottom-colors: #555 #666 #777 #888 #999 #aaa #bbb #ccc;
+    -moz-border-top-colors: #555 #666 #777 #888 #999 #aaa #bbb #ccc;
+    -moz-border-left-colors: #555 #666 #777 #888 #999 #aaa #bbb #ccc;
+    -moz-border-right-colors: #555 #666 #777 #888 #999 #aaa #bbb #ccc;
+    text-align: left;
+}
+
+
+#parkcacheLayer {
+    position: absolute;
+    right: 147px;
+    top: 174px;
+    z-index: 100;
+    width: 300px;
+    max-height: 580px;
+    min-height: 200px;
+    line-height: 30px;
+}
+
+/*停车场详情页的样式*/
+div#park_detail_title {
+    font-weight: bold;
+    font-size: 24px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+div#park_detail_address {
+    margin-bottom: 20px;
+}
+span#park_detail_address_location {
+    font-size: 18px;
+    color: #A2A2A2;
+    margin-right: 50px;
+}
+span.park_detail_address_circle {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    border-radius: 10px;
+    text-align: center;
+    background: #ffb140 center center;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+span.park_detail_address_circle_content {
+    font-size: 18px;
+    color: #A2A2A2;
+}
+div#park_detail_map {
+    width: 696px;
+    height: 500px;
+    margin-bottom: 30px;
+}
+span#park_detail_address_right {
+    float: right;
+}
+span.park_detail_other_title {
+    font-size: 16px;
+    color: #A2A2A2;
+}
+div#park_detail_describe {
+    margin-left: 85px;
+}
